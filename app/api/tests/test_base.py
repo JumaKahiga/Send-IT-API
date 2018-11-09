@@ -1,6 +1,6 @@
 import unittest
 from app import create_app
-from api.v1.models import ParcelOrder
+from app.api.v1.models import ParcelOrder
 
 parcels = ParcelOrder()
 parcel_dummy_data= {"parcel_id": "100", 
