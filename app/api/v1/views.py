@@ -38,3 +38,4 @@ api = Api(v1)
 
 # Add parcel resources
 api.add_resource(CreateParcels, "/parcel", strict_slashes=False)
+api.add_resource(AllOrders, "/parcels", strict_slashes=False)
