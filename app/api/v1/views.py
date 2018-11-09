@@ -21,8 +21,13 @@ class CreateParcels(Resource):
         parcels = parcel.db
         return make_response(jsonify({"message": "Parcel order created successfully"}), 200)
 
+
+class AllOrders(Resource):
+    def __init__(self):
+        pass
+
     def get(self):
-    	pass
+        return parcel.db
 
 
 v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
