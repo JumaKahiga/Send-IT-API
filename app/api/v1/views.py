@@ -21,6 +21,9 @@ class CreateParcels(Resource):
         parcels = parcel.db
         return make_response(jsonify({"message": "Parcel order created successfully"}), 200)
 
+    def get(self):
+    	pass
+
 
 v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
 
