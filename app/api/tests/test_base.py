@@ -3,6 +3,7 @@ from app import create_app
 from app.api.v1.models import ParcelOrder
 
 parcels = ParcelOrder()
+
 parcel_dummy_data= {"parcel_id": "100", 
 					"client_name": "John Doe", 
 					"package_desc": "Television", 
@@ -13,13 +14,13 @@ parcel_dummy_data= {"parcel_id": "100",
 
 class BaseTest(unittest.TestCase):
 	"""docstring for BaseTest"""
-	def _setUp(self):
+	def setUp(self):
 		self.app= create_app()
 		self.client= self.app.test_client()
 		self.test_parcel= parcel_dummy_data
 
 	def tearDown(self):
-		parcels.db.clear()
+		parcels.clear()
 		
 
 
