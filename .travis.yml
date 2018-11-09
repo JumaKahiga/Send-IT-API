@@ -1,11 +1,18 @@
 language:
-  - "python"
+  - python
 
 python:
   - "3.6"
 
+install:
+  - pip install -r requirements.txt
+  - pip install coverag
+
 script:
-  - "pytest --cov"
+  -pytest
+
+after_script:
+  -coveralls
 
 before_install:
 
@@ -13,9 +20,6 @@ virtualenv:
   - system-site-packages: false
 
 
-install:
-  - "pip3 install -requirements.txt"
-  - "pip3 install coveralls"
 
 
 
