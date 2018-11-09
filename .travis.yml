@@ -9,13 +9,13 @@ install:
   - pip install coverage
 
 script:
-  -py.test
+  - pytest
 
 after_script:
-  -coveralls
+  - coveralls
 
 after_success:
-- codecov
+  - codecov
 
 
 
