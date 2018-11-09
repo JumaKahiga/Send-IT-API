@@ -10,7 +10,19 @@ class ParcelSingle(Resource):
 		pass
 
 	def post(self, parcelID):
-		pass
+		data= request.get_json()
+		client_name= data['client_name']
+		package_desc= data['package_desc']
+		location= data['location']
+		destination= data['destination']
+		pickup_date= data['pickup_date']
+
+		parcel.new_parcel(client_name, package_desc, location, destination, pickup_date)
+		parcels= parcels.db
+		return make_response(jsonify({
+			"message": "Parcel order created successfully"
+			}), 200)
 
 	def get(self, parcelID):
 		pass
+		
