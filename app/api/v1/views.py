@@ -30,6 +30,16 @@ class AllOrders(Resource):
         return parcel.db
 
 
+class SpecificOrder(Resource):
+    def __init__(self):
+        pass
+
+    def get(self, parcel_id):
+        data = request.get_json()
+        single_order = parcel.single_parcel(parcel_id)
+        return single_order
+
+
 v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
 
 
@@ -39,3 +49,4 @@ api = Api(v1)
 # Add parcel resources
 api.add_resource(CreateParcels, "/parcel", strict_slashes=False)
 api.add_resource(AllOrders, "/parcels", strict_slashes=False)
+api.add_resource(SpecificOrder, '/parcels/<int:parcel_id>', strict_slashes=False)
