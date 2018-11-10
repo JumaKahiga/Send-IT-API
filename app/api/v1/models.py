@@ -13,7 +13,7 @@ class UserModel(object):
         self.new_user_id= self.user_id + 1
         self.user_role = customer
 
-    def new_user(self, name, email, password, contact_phone):
+    def new_user(self, uname, email, password, contact_phone):
         user_data = {
             "user_id": self.user_id + 1,
             "uname": uname,

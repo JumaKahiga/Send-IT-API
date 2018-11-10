@@ -22,6 +22,16 @@ class CreateUser(Resource):
 		return make_response(jsonify({"message": "User registration successful"}), 201)
 
 
+class SpecificUser(Resource):
+    def __init__(self):
+        pass
+
+    def get(self, user_id):
+        data = request.get_json()
+        single_user = mteja.single_user(user_id)
+        return single_user
+
+
 class CreateParcels(Resource):
     def __init__(self):
         pass
@@ -35,7 +45,7 @@ class CreateParcels(Resource):
         pickup_date = data['pickup_date']
         parcel.new_parcel(client_name, package_desc, location, destination, pickup_date)
         parcels = parcel.db
-        return make_response(jsonify({"message": "Parcel order created successfully"}), 200)
+        return make_response(jsonify({"message": "Parcel order created successfully"}), 201)
 
 
 class AllOrders(Resource):
@@ -69,3 +79,4 @@ api.add_resource(SpecificOrder, '/parcels/<int:parcel_id>', strict_slashes=False
 
 # Add user resources
 api.add_resource(CreateUser, "/users", strict_slashes=False)
+api.add_resource(SpecificUser, '/users/<int:user_id>', strict_slashes=False)

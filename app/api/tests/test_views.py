@@ -8,7 +8,7 @@ class TestParcel(BaseTest):
 	"""docstring for TestParcel"""
 	def test_new_parcel(self):
 		respo= self.client.post('/api/v1/parcel',data = json.dumps(self.sample_parcel), content_type='application/json')
-		self.assertEqual(respo.status_code,200)
+		self.assertEqual(respo.status_code,201)
 
 	def test_all_parcels(self):
 		respo= self.client.get('/api/v1/parcels')
