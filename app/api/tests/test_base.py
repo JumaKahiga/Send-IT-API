@@ -16,8 +16,8 @@ class BaseTest(unittest.TestCase):
 	"""docstring for BaseTest"""
 	def setUp(self):
 		self.app= create_app()
-		self.client= self.app.test_client()
-		self.test_parcel= parcel_dummy_data
+		self.client= self.app.test_client(self)
+		self.sample_parcel= parcel_dummy_data
 
 	def tearDown(self):
 		parcels.clear()

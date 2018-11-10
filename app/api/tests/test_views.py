@@ -14,12 +14,15 @@ parcel_dummy_data= {"parcel_id": "100",
 class TestParcel(BaseTest):
 	"""docstring for TestParcel"""
 	def test_new_parcel(self):
-		respo= self.client.post('/api/v1/parcel',data = json.dumps(parcel_dummy_data), content_type='application/json')
+		respo= self.client.post('/api/v1/parcel',data = json.dumps(self.sample_parcel), content_type='application/json')
 		self.assertEqual(respo.status_code,200)
 
+	def test_all_parcels(self):
+		respo= self.client.get('/api/v1/parcels')
+		self.assertEqual(respo.status_code, 200)
 
 	def test_single_parcel(self):
-		respo= self.client.get('/api/v1/parcels')
+		respo= self.client.get('/api/v1/parcels/100')
 		self.assertEqual(respo.status_code, 200)
 
 
