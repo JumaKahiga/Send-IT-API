@@ -45,12 +45,13 @@ class ParcelOrder(object):
     """Creating model for parcels"""
     def __init__(self):
         self.db = parcels
-        self.parcel_id = len(self.db) + 1
+        self.parcel_id = len(self.db)
+        self.new_parcel_id= self.parcel_id + 1
         self.parcel_status = pending
 
     def new_parcel(self, client_name, package_desc, location, destination, pickup_date):
         new_order_data = {
-            "parcel_id": self.parcel_id + 1,
+            "parcel_id": self.new_parcel_id,
             "client_name": client_name,
             "package_description": package_desc,
             "location": location,
