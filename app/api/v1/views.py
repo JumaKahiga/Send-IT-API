@@ -39,11 +39,12 @@ class CreateParcels(Resource):
     def post(self):
         data = request.get_json()
         client_name = data['client_name']
+        user_id = data ['user_id']
         package_desc = data['package_desc']
         location = data['location']
         destination = data['destination']
         pickup_date = data['pickup_date']
-        parcel.new_parcel(client_name, package_desc, location, destination, pickup_date)
+        parcel.new_parcel(client_name, user_id, package_desc, location, destination, pickup_date)
         parcels = parcel.db
         return make_response(jsonify({"message": "Parcel order created successfully"}), 201)
 
@@ -61,7 +62,6 @@ class SpecificOrder(Resource):
         pass
 
     def get(self, parcel_id):
-        data = request.get_json()
         single_order = parcel.single_parcel(parcel_id)
         return single_order
 
@@ -76,6 +76,14 @@ class CancelOrder(Resource):
  		return make_response(jsonify({"message": "Parcel order cancelled"}), 200)
 
 
+class UserSpecificOrders(Resource):
+	def __init__(self):
+		pass
+
+	def get(self, user_id):
+		pass
+
+
 v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
 
 
@@ -86,6 +94,7 @@ api = Api(v1)
 api.add_resource(CreateParcels, "/parcel", strict_slashes=False)
 api.add_resource(AllOrders, "/parcels", strict_slashes=False)
 api.add_resource(SpecificOrder, '/parcels/<int:parcel_id>', strict_slashes=False)
+api.add_resource(CancelOrder, '/parcels/<int:parcel_id>/cancel', strict_slashes=False)
 api.add_resource(CancelOrder, '/parcels/<int:parcel_id>/cancel', strict_slashes=False)
 
 # Add user resources

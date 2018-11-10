@@ -49,9 +49,8 @@ class ParcelOrder(UserModel):
         self.parcel_id = len(self.db)
         self.new_parcel_id= self.parcel_id + 1
         self.parcel_status = pending
-        self.user_id= user_id
 
-    def new_parcel(self, client_name, package_desc, location, destination, pickup_date):
+    def new_parcel(self,client_name, user_id, package_desc, location, destination, pickup_date):    	
         new_order_data = {
             "parcel_id": self.new_parcel_id,
             "client_name": client_name,
@@ -90,6 +89,7 @@ class ParcelOrder(UserModel):
         		return parcel
         	else:
         		return {'parcel': 'Not Available'}, 404
+        		
     def clear(self):
     	self.db = []
 
