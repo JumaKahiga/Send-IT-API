@@ -3,10 +3,9 @@ import json
 from app.api.tests.test_base import BaseTest
 
 
-
-class TestParcel(BaseTest):
-	"""docstring for TestParcel"""
-	def test_new_parcel(self):
+class TestUser(BaseTest):
+	"""docstring for TestUser"""
+	def test_new_user(self):
 		respo= self.client.post('/api/v1/parcel',data = json.dumps(self.sample_parcel), content_type='application/json')
 		self.assertEqual(respo.status_code,200)
 

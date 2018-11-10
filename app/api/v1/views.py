@@ -1,9 +1,25 @@
 from flask import request, Blueprint, make_response, jsonify
 from flask_restful import Resource, Api
-from app.api.v1.models import ParcelOrder
+from app.api.v1.models import ParcelOrder, UserModel
 
 
 parcel = ParcelOrder()
+mteja= UserModel()
+
+
+class CreateUser(Resource):
+	def __init__(self):
+		pass
+
+	def post(self):
+		data = request.get_json()
+		uname = data['uname']
+		email = data['email']
+		password = data['password']
+		contact_phone = data['contact_phone']
+		mteja.new_user(uname, email, password, contact_phone)
+		users= mteja.udb
+		return make_response(jsonify({"message": "User registration successful"}), 201)
 
 
 class CreateParcels(Resource):
@@ -50,3 +66,6 @@ api = Api(v1)
 api.add_resource(CreateParcels, "/parcel", strict_slashes=False)
 api.add_resource(AllOrders, "/parcels", strict_slashes=False)
 api.add_resource(SpecificOrder, '/parcels/<int:parcel_id>', strict_slashes=False)
+
+# Add user resources
+api.add_resource(CreateUser, "/users", strict_slashes=False)
