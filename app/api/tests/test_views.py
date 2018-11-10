@@ -24,10 +24,6 @@ class TestParcel(BaseTest):
 		respo= self.client.put('api/v1/parcels/' + parcel_id + '/cancel')
 		self.assertEqual(respo.status_code, 200)
 
-	def test_specific_user_orders(self):
-		user_id= self.user_id
-		respo= self.client.get('api/v1/users/' + user_id + '/parcels')
-		self.assertEqual(respo.status_code, 200)
 
 
 if __name__ == "__main__":

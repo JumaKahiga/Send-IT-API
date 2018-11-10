@@ -96,8 +96,9 @@ api.add_resource(CreateParcels, "/parcel", strict_slashes=False)
 api.add_resource(AllOrders, "/parcels", strict_slashes=False)
 api.add_resource(SpecificOrder, '/parcels/<int:parcel_id>', strict_slashes=False)
 api.add_resource(CancelOrder, '/parcels/<int:parcel_id>/cancel', strict_slashes=False)
-api.add_resource(CancelOrder, '/parcels/<int:parcel_id>/cancel', strict_slashes=False)
+
 
 # Add user resources
 api.add_resource(CreateUser, "/users", strict_slashes=False)
 api.add_resource(SpecificUser, '/users/<int:user_id>', strict_slashes=False)
+api.add_resource(UserSpecificOrders, '/users/<int:user_id>/parcels', strict_slashes=False)
