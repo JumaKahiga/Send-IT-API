@@ -30,6 +30,7 @@ class BaseTest(unittest.TestCase):
 		self.client= self.app.test_client(self)
 		self.sample_parcel= parcel_dummy_data
 		self.new_parcel_id= str(parcels.new_parcel_id)
+		self.parcel_id= str(parcels.parcel_id)
 		self.sample_user= user_dummy_data
 		self.new_user_id= str(mteja.new_user_id)
 

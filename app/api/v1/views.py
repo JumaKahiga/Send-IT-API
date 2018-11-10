@@ -73,6 +73,7 @@ class CancelOrder(Resource):
  	def put(self, parcel_id):
  		updated_order= parcel.cancel_order(parcel_id)
  		return updated_order
+ 		return make_response(jsonify({"message": "Parcel order cancelled"}), 200)
 
 
 v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
@@ -85,6 +86,7 @@ api = Api(v1)
 api.add_resource(CreateParcels, "/parcel", strict_slashes=False)
 api.add_resource(AllOrders, "/parcels", strict_slashes=False)
 api.add_resource(SpecificOrder, '/parcels/<int:parcel_id>', strict_slashes=False)
+api.add_resource(CancelOrder, '/parcels/<int:parcel_id>/cancel', strict_slashes=False)
 
 # Add user resources
 api.add_resource(CreateUser, "/users", strict_slashes=False)
