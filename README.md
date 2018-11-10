@@ -1,5 +1,5 @@
 # Build Badge
-
+[![Build Status](https://travis-ci.org/JumaKahiga/Send-IT-API.svg?branch=ch-edit-readme-161859803)](https://travis-ci.org/JumaKahiga/Send-IT-API)
 
 # sendIT
 SendIT is an app for a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories
