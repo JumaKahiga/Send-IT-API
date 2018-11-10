@@ -81,7 +81,8 @@ class UserSpecificOrders(Resource):
 		pass
 
 	def get(self, user_id):
-		pass
+		single_user_orders= parcel.specific_user_orders(user_id)
+		return single_user_orders
 
 
 v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
