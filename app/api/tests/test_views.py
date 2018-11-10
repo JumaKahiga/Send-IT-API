@@ -19,6 +19,11 @@ class TestParcel(BaseTest):
 		respo= self.client.get('/api/v1/parcels/' + parcel_id)
 		self.assertEqual(respo.status_code, 200)
 
+	def test_cancel_order(self):
+		parcel_id = self.parcel_id
+		respo= self.client.put('api/v1/parcels/' + parcel_id + '/cancel')
+		self.assertEqual(respo.status_code, 200)
+
 
 if __name__ == "__main__":
 	unittest.main()
