@@ -65,6 +65,13 @@ class SpecificOrder(Resource):
         single_order = parcel.single_parcel(parcel_id)
         return single_order
 
+ class CancelOrder(Resource):
+ 	def __init__(self):
+ 		pass
+
+ 	def put(self, parcel_id):
+ 		pass
+
 
 v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
 
