@@ -10,12 +10,13 @@ class UserModel(object):
     def __init__(self):
         self.udb = users
         self.user_id = len(self.udb)
+        self.new_user_id= self.user_id + 1
         self.user_role = customer
 
     def new_user(self, name, email, password, contact_phone):
         user_data = {
             "user_id": self.user_id + 1,
-            "name": name,
+            "uname": uname,
             "email": email,
             "password": password,
             "contact_phone": contact_phone,
