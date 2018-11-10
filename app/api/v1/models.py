@@ -42,18 +42,20 @@ delivered= "Delivered"
 cancelled= "Cancelled"
 
 
-class ParcelOrder(object):
+class ParcelOrder(UserModel):
     """Creating model for parcels"""
     def __init__(self):
         self.db = parcels
         self.parcel_id = len(self.db)
         self.new_parcel_id= self.parcel_id + 1
         self.parcel_status = pending
+        self.user_id= user_id
 
     def new_parcel(self, client_name, package_desc, location, destination, pickup_date):
         new_order_data = {
             "parcel_id": self.new_parcel_id,
             "client_name": client_name,
+            "user_id": user_id,
             "package_description": package_desc,
             "location": location,
             "destination": destination,
@@ -83,7 +85,11 @@ class ParcelOrder(object):
                 return {'parcel': 'Order Cancelled'}
 
     def specific_user_orders(self, user_id):
-        pass
+        for parcel in parcels:
+        	if parcel["user_id"] == user_id:
+        		return parcel
+        	else:
+        		return {'parcel': 'Not Available'}, 404
     def clear(self):
     	self.db = []
 
