@@ -12,24 +12,7 @@ class UserModel(object):
         self.user_id = len(self.udb)
         self.user_role = customer
 
-    def new_user(self, name, email, password, contact_phone):
-        user_data = {
-            "user_id": self.user_id + 1,
-            "name": name,
-            "email": email,
-            "password": password,
-            "contact_phone": contact_phone,
-        }
 
-        created_user = self.udb.append(user_data)
-        return created_user
-
-    def single_user(self, user_id):
-        for user in users:
-            if user["user_id"] == user_id:
-                return user
-            else:
-                return {'User': 'Not Available'}, 404
 
 
 parcels = []
@@ -45,7 +28,7 @@ class ParcelOrder(object):
     """Creating model for parcels"""
     def __init__(self):
         self.db = parcels
-        self.parcel_id = len(self.db)
+        self.parcel_id = len(self.db) + 1
         self.parcel_status = pending
 
     def new_parcel(self, client_name, package_desc, location, destination, pickup_date):
