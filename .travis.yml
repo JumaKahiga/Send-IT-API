@@ -7,6 +7,7 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coverage
+  - pip install coveralls
 
 script:
   - pytest
@@ -15,7 +16,9 @@ after_script:
   - coveralls
 
 after_success:
+  - coveralls
   - codecov
+
 
 
 
