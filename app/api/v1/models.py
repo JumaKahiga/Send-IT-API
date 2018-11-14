@@ -9,7 +9,7 @@ class UserModel(object):
     """Creating user model"""
     def __init__(self):
         self.udb = users
-        self.user_id = len(self.udb)
+        self.user_id = len(users)
         self.new_user_id= self.user_id + 1
         self.user_role = customer
 
