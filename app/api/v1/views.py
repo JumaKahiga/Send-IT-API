@@ -39,12 +39,11 @@ class CreateParcels(Resource):
     def post(self):
         data = request.get_json()
         client_name = data['client_name']
-        user_id = data ['user_id']
         package_desc = data['package_desc']
         location = data['location']
         destination = data['destination']
         pickup_date = data['pickup_date']
-        parcel.new_parcel(client_name, user_id, package_desc, location, destination, pickup_date)
+        parcel.new_parcel(client_name, package_desc, location, destination, pickup_date)
         parcels = parcel.db
         return make_response(jsonify({"message": "Parcel order created successfully"}), 201)
 
