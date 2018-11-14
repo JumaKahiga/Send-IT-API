@@ -19,6 +19,7 @@ more-itertools==4.3.0
 pluggy==0.8.0
 py==1.7.0
 pytest==3.10.0
+pytest-cov==2.6.0
 pytz==2018.7
 requests==2.20.1
 six==1.11.0
