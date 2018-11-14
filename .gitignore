@@ -1,4 +1,6 @@
 venv
 *.pyc
 __pycache__
-app/__init__.pyc
+.coverage
+.cache/
+.vscode/
