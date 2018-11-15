@@ -9,6 +9,7 @@ mteja= UserModel()
 
 parcel_dummy_data= {"client_name": "John Doe", 
 					"user_id": 5,
+					"parcel_id": 1,
 					"package_desc": "Television", 
 					"location": "Mirema", 
 					"destination": "Buruburu", 
@@ -17,7 +18,8 @@ parcel_dummy_data= {"client_name": "John Doe",
 
 
 user_dummy_data= {
-            "uname": "Thomas Smith",
+            "username": "Thomas Smith",
+            "user_id": 5,
             "email": "thomas@smith.com",
             "password": "pass1234",
             "contact_phone": "0712345678",
@@ -29,11 +31,10 @@ class BaseTest(unittest.TestCase):
 	def setUp(self):
 		self.app= create_app()
 		self.client= self.app.test_client(self)
+		self.parcel_id= str(parcel_dummy_data.get("parcel_id"))
 		self.sample_parcel= parcel_dummy_data
-		self.new_parcel_id= str(parcels.new_parcel_id)
-		self.parcel_id= str(parcels.parcel_id)
 		self.sample_user= user_dummy_data
-		self.new_user_id= str(mteja.new_user_id)
+		self.user_id= str(user_dummy_data.get("user_id"))
 
 	def tearDown(self):
 		parcels.clear()

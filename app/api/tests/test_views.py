@@ -15,7 +15,7 @@ class TestParcel(BaseTest):
 		self.assertEqual(respo.status_code, 200)
 
 	def test_single_parcel(self):
-		parcel_id= self.new_parcel_id
+		parcel_id= self.parcel_id
 		respo= self.client.get('/api/v1/parcels/' + parcel_id)
 		self.assertEqual(respo.status_code, 200)
 

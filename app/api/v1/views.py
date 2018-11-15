@@ -73,8 +73,8 @@ class SpecificOrder(Resource):
     	else:
     		parcel_id= int(parcel_id)
 
-        single_order = parcel.single_parcel(parcel_id)
-        return single_order
+    	single_order = parcel.single_parcel(parcel_id)
+    	return single_order
 
 
 class CancelOrder(Resource):
