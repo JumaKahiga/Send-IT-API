@@ -11,7 +11,7 @@ class TestUser(BaseTest):
 		self.assertEqual(respo.status_code, 201)
 
 	def test_single_user(self):
-		user_id = self.new_user_id
+		user_id = self.user_id
 		respo= self.client.get('/api/v1/users/' + user_id)
 		self.assertEqual(respo.status_code, 200)
 
