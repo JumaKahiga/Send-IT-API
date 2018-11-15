@@ -64,11 +64,11 @@ class ParcelOrder(UserModel):
         return self.db
 
     def single_parcel(self, parcel_id):
-        for parcel in parcels:
-            if parcel["parcel_id"]== parcel_id:
-                return parcel
-            else:
-                return jsonify({'parcel': 'Not Available'})
+        percels = [parcel for parcel in parcels if parcel["parcel_id"] == parcel_id]
+        if not percels:
+            return jsonify({'parcel': 'Not Available'})
+        else:
+            return percels[0]
 
     def cancel_order(self, parcel_id):
         for parcel in parcels:

@@ -69,16 +69,24 @@ class SpecificOrder(Resource):
     	try:
     		int(parcel_id)
     	except ValueError:
-    		return make_response(jsonify({"Error": "Enter valid parcel ID"}))
+    		return make_response(jsonify({"Error": "Enter valid parcel ID"}), 409)
     	else:
     		parcel_id= int(parcel_id)
 
     	single_order = parcel.single_parcel(parcel_id)
+    	print(parcel_id)
     	return single_order
 
 
 class CancelOrder(Resource):
  	def put(self, parcel_id):
+ 		try:
+ 			int(parcel_id)
+ 		except ValueError:
+ 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 409)
+ 		else:
+ 			parcel_id= int(parcel_id)
+
  		updated_order= parcel.cancel_order(parcel_id)
  		return updated_order
  		return make_response(jsonify({"message": "Parcel order cancelled"}), 200)

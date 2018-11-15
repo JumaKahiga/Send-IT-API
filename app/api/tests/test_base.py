@@ -9,7 +9,7 @@ mteja= UserModel()
 
 parcel_dummy_data= {"client_name": "John Doe", 
 					"user_id": 5,
-					"parcel_id": 1,
+					"parcel_id": 2,
 					"package_desc": "Television", 
 					"location": "Mirema", 
 					"destination": "Buruburu", 
