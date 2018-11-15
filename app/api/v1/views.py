@@ -47,9 +47,13 @@ class AllUsers(Resource):
 
 
 class CreateParcels(Resource):
+	def __init__(self):
+		self.user_id= 100
+
     def post(self):
         data = request.get_json()
         client_name = data['client_name']
+        user_id= self.user_id + 1
         package_desc = data['package_desc']
         location = data['location']
         destination = data['destination']
