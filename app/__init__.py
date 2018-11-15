@@ -9,5 +9,10 @@ def create_app():
     @app.errorhandler(404)
     def page_not_found():
     	return jsonify({"Message": "The requested URL does not exist"})
+
+    @app.errorhandler(505)
+    def server_error():
+    	return jsonify({"Message": "Something went wrong. Check your inputs and try again"})   
+    	 
     return app
 

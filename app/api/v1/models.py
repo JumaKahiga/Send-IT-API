@@ -10,18 +10,18 @@ site_admin = "Admin"
 class UserModel(object):
     """Creating user model"""
     def __init__(self):
-        self.udb = users
+        self.user_db = users
         self.user_role = customer
 
     def new_user(self, username, email, password, contact_phone):
         user_data = {
-            "user_id": len(self.udb) + 1,
+            "user_id": len(self.user_db) + 1,
             "username": username,
             "email": email,
             "password": password,
             "contact_phone": contact_phone,
         }
-        created_user= self.udb.append(user_data)
+        created_user= self.user_db.append(user_data)
         return created_user
 
     def single_user(self, user_id):
@@ -46,10 +46,11 @@ class ParcelOrder(UserModel):
         self.db = parcels
         self.parcel_status = pending
 
-    def new_parcel(self,client_name, package_desc, location, destination, pickup_date):    	
+    def new_parcel(self,client_name, user_id, package_desc, location, destination, pickup_date):    	
         new_order_data = {
             "parcel_id": len(self.db) + 1,
             "client_name": client_name,
+            "user_id": user_id,
             "package_description": package_desc,
             "location": location,
             "destination": destination,
@@ -81,11 +82,13 @@ class ParcelOrder(UserModel):
                 return {'parcel': 'Order Cancelled'}
 
     def specific_user_orders(self, user_id):
-        for parcel in parcels:
-        	if parcel["user_id"] == user_id:
-        		return parcel
-        	else:
-        		return {'parcel': 'Not Available'}
+        parcel_list= []
+        for parcel in self.db:
+            if parcel['user_id'] == user_id:
+                parcel_list.append(parcel)
+        if not parcel_list:
+            return {'parcel': 'Not Available'}
+        return parcel_list
         		
     def clear(self):
     	self.db = []

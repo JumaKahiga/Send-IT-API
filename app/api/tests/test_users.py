@@ -10,7 +10,11 @@ class TestUser(BaseTest):
 		respo= self.client.post('/api/v1/users',data = json.dumps(self.sample_user), content_type='application/json')
 		self.assertEqual(respo.status_code, 201)
 
-	def test_single_user(self):
+	def test_all_users(self):
+		respo= self.client.get('/api/v1/users/all')
+		self.assertEqual(respo.status_code, 200)
+
+	def test_specific_user(self):
 		user_id = self.user_id
 		respo= self.client.get('/api/v1/users/' + user_id)
 		self.assertEqual(respo.status_code, 200)
