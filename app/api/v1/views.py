@@ -43,24 +43,30 @@ class SpecificUser(Resource):
 
 class AllUsers(Resource):
 	def get(self):
-		return mteja.udb
+		return mteja.user_db
 
 
 class CreateParcels(Resource):
 	def __init__(self):
 		self.user_id= 100
+		self.parcel_parser= RequestParser()
+		self.parcel_parser.add_argument("client_name", type=str, required=True, help="Invalid username. Please try again")
+		self.parcel_parser.add_argument("package_desc", type=str, required=True, help="Field cannot be empty. Please provide package details")
+		self.parcel_parser.add_argument("location", type=str, required=True, help="Details for where parcel will be collected are invalid")
+		self.parcel_parser.add_argument("destination", type=str, required=True, help="Details for where parcel will be delivered are invalid")
+		self.parcel_parser.add_argument("pickup_date", type=str, required=True, help="Please enter valid pickup date for the parcel")
 
-    def post(self):
-        data = request.get_json()
-        client_name = data['client_name']
-        user_id= self.user_id + 1
-        package_desc = data['package_desc']
-        location = data['location']
-        destination = data['destination']
-        pickup_date = data['pickup_date']
-        parcel.new_parcel(client_name, package_desc, location, destination, pickup_date)
-        parcels = parcel.db
-        return make_response(jsonify({"message": "Parcel order created successfully"}), 201)
+	def post(self):
+		data = self.parcel_parser.parse_args()
+		client_name = data['client_name']
+		user_id= self.user_id + 1
+		package_desc = data['package_desc']
+		location = data['location']
+		destination = data['destination']
+		pickup_date = data['pickup_date']
+		parcel.new_parcel(client_name, user_id, package_desc, location, destination, pickup_date)
+		parcels = parcel.db
+		return make_response(jsonify({"message": "Parcel order created successfully"}), 201)
 
 
 class AllOrders(Resource):
@@ -92,12 +98,18 @@ class CancelOrder(Resource):
  			parcel_id= int(parcel_id)
 
  		updated_order= parcel.cancel_order(parcel_id)
- 		return updated_order
  		return make_response(jsonify({"message": "Parcel order cancelled"}), 200)
 
 
 class UserSpecificOrders(Resource):
 	def get(self, user_id):
+		try:
+			int(user_id)
+		except ValueError:
+			return make_response(jsonify({"Message": "Invalid user ID"}), 409)
+		else:
+			user_id= int(user_id)
+
 		single_user_orders= parcel.specific_user_orders(user_id)
 		return single_user_orders
 
