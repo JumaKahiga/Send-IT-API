@@ -2,6 +2,7 @@ from flask import request, Blueprint, make_response, jsonify
 from flask_restful import Resource, Api
 from flask_restful.reqparse import RequestParser
 from app.api.v1.models import ParcelOrder, UserModel
+from app.api.utilities.validators import email_validator
 
 
 parcel = ParcelOrder()
@@ -23,8 +24,11 @@ class CreateUser(Resource):
 		email = user_data.get("email")
 		password = user_data.get("password")
 		contact_phone = user_data.get("contact_phone")
-		mteja.new_user(username, email, password, contact_phone)
-		return make_response(jsonify({"message": "User registration successful"}), 201)
+		if email_validator(email):
+			mteja.new_user(username, email, password, contact_phone)
+			return make_response(jsonify({"message": "User registration successful"}), 201)
+		else:
+			return jsonify({"message": "Please enter valid email"})
 
 
 class SpecificUser(Resource):
@@ -51,7 +55,7 @@ class CreateParcels(Resource):
 		self.user_id= 100
 		self.parcel_parser= RequestParser()
 		self.parcel_parser.add_argument("client_name", type=str, required=True, help="Invalid username. Please try again")
-		self.parcel_parser.add_argument("package_desc", type=str, required=True, help="Field cannot be empty. Please provide package details")
+		self.parcel_parser.add_argument("package_desc", type=str, required=True, help="Please enter valid package details")
 		self.parcel_parser.add_argument("location", type=str, required=True, help="Details for where parcel will be collected are invalid")
 		self.parcel_parser.add_argument("destination", type=str, required=True, help="Details for where parcel will be delivered are invalid")
 		self.parcel_parser.add_argument("pickup_date", type=str, required=True, help="Please enter valid pickup date for the parcel")
@@ -79,7 +83,7 @@ class SpecificOrder(Resource):
     	try:
     		int(parcel_id)
     	except ValueError:
-    		return make_response(jsonify({"Error": "Enter valid parcel ID"}), 409)
+    		return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
     	else:
     		parcel_id= int(parcel_id)
 
@@ -93,12 +97,13 @@ class CancelOrder(Resource):
  		try:
  			int(parcel_id)
  		except ValueError:
- 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 409)
+ 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
  		else:
  			parcel_id= int(parcel_id)
 
  		updated_order= parcel.cancel_order(parcel_id)
- 		return make_response(jsonify({"message": "Parcel order cancelled"}), 200)
+ 		return updated_order
+ 		return make_response(jsonify({"message": "Successfully updated"}))
 
 
 class UserSpecificOrders(Resource):
