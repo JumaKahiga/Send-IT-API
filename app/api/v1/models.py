@@ -21,6 +21,7 @@ class UserModel(object):
             "password": password,
             "contact_phone": contact_phone,
         }
+
         created_user= self.user_db.append(user_data)
         return created_user
 
@@ -40,7 +41,7 @@ delivered= "Delivered"
 cancelled= "Cancelled"
 
 
-class ParcelOrder(UserModel):
+class ParcelOrder():
     """Creating model for parcels"""
     def __init__(self):
         self.db = parcels
@@ -59,7 +60,7 @@ class ParcelOrder(UserModel):
         }
 
         order= self.db.append(new_order_data)
-        return order
+        return new_order_data
 
     def parcels_list(self):
         return self.db
@@ -73,8 +74,8 @@ class ParcelOrder(UserModel):
 
     def cancel_order(self, parcel_id):
         for parcel in parcels:
-            if parcel["status"] == delivered:
-                return jsonify({'parcel': "Cannot be cancelled. Already delivered"})
+            if parcel["parcel_id"] != parcel_id:
+                return jsonify({'parcel': "Parcel not found"})
             elif parcel["status"] == cancelled:
                 return jsonify({'parcel': "Order already cancelled"})
             elif parcel['parcel_id'] == parcel_id:

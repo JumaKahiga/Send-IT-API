@@ -8,7 +8,9 @@ class TestParcel(BaseTest):
 	"""docstring for TestParcel"""
 	def test_new_parcel(self):
 		respo= self.client.post('/api/v1/parcel',data = json.dumps(self.sample_parcel), content_type='application/json')
+		result= json.loads(respo.data.decode())
 		self.assertEqual(respo.status_code,201)
+		self.assertEqual(result["message"], "Parcel order created successfully")
 
 	def test_all_parcels(self):
 		respo= self.client.get('/api/v1/parcels')
@@ -17,6 +19,7 @@ class TestParcel(BaseTest):
 	def test_single_parcel(self):
 		parcel_id= self.parcel_id
 		respo= self.client.get('/api/v1/parcels/' + parcel_id)
+		result= json.loads(respo.data.decode())
 		self.assertEqual(respo.status_code, 200)
 
 	def test_cancel_order(self):
