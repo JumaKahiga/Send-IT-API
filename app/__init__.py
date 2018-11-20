@@ -4,7 +4,6 @@ from config import config_set
 
 
 def create_app(config):
-    """Create Flask app and define its parameters."""
     app = Flask(__name__)
     app.config.from_object(config_set[config])
     app.register_blueprint(v2)

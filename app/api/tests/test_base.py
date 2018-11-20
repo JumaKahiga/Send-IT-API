@@ -1,10 +1,7 @@
 import unittest
-import os
-import testing.postgresql
 from app import create_app
 from app.api.v2.models import ParcelOrder, UserModel
-from app.api.tests.k import testconfig as config_desc
-from app.api.database import DbConnections
+from app.api.database import db
 
 parcels = ParcelOrder()
 mteja = UserModel()
@@ -34,7 +31,6 @@ class BaseTest(unittest.TestCase):
 	"""docstring for BaseTest"""
 	def setUp(self):
 		self.db = db
-		#self.db = testing.postgresql.Postgresql(copy_data_from="postgresql://postgres:sendit_admin@localhost:5432/sendit_test")
 		self.app= create_app(config="testing")
 		self.client= self.app.test_client(self)
 		self.parcel_id= str(parcel_dummy_data.get("parcel_id"))
