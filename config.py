@@ -5,12 +5,16 @@ class MainConfig():
 	DEBUG = False
 	TESTING = False
 	SECRET_KEY = "andela"
-	DB_URL = "postgresql://sendit_admin:password@localhost/sendit_db"
+	DBNAME = "sendit_db"
+	DBUSER = "sendit_admin"
+	DBHOST = "localhost"
+	DBPASS = "andela"
 
 
 class DevelopmentConfig(MainConfig):
 	"""Development configuration"""
 	DEBUG = True
+	DB_URL = "postgresql://sendit_admin:password@localhost/sendit_db"
 
 
 class ProductionConfig(MainConfig):
@@ -21,7 +25,10 @@ class ProductionConfig(MainConfig):
 
 class TestingConfig(MainConfig):
 	DEBUG = True
-	DB_URL = "postgresql://sendit_admin:password@localhost/sendit_test"
+	DBNAME = "sendit_test"
+	DBUSER = "postgres"
+	DBHOST = "localhost"
+	DBPASS = "andela"
 
 
 config_set = {

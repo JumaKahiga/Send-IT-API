@@ -5,7 +5,7 @@ from app.api.v2.views import v2
 from config import config_set
 
 
-def create_app(config="development"):
+def create_app(config="testing"):
     app = Flask(__name__)
     CORS(app)
     app.config.from_object(config_set[config])

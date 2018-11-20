@@ -1,6 +1,7 @@
 from flask import jsonify
 from app.api.database import db
 
+db.create_tables()
 
 # User roles
 customer = "Customer"
@@ -52,7 +53,7 @@ class ParcelOrder():
         parcels_tb = "parcels_tb"
 
         order= db.insert(parcels_tb, new_order_data)
-        return "Inserted successfully"
+        return "Parcel created successfully"
 
     def parcels_list(self):
         pass

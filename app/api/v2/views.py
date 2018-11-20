@@ -55,6 +55,7 @@ class CreateParcels(Resource):
 		self.user_id= 100
 		self.parcel_parser= RequestParser()
 		self.parcel_parser.add_argument("client_name", type=str, required=True, help="Invalid username. Please try again")
+		self.parcel_parser.add_argument("recipient_name", type=str, required=True, help="Invalid username. Please try again")
 		self.parcel_parser.add_argument("package_desc", type=str, required=True, help="Please enter valid package details")
 		self.parcel_parser.add_argument("location", type=str, required=True, help="Details for where parcel will be collected are invalid")
 		self.parcel_parser.add_argument("destination", type=str, required=True, help="Details for where parcel will be delivered are invalid")
@@ -64,11 +65,12 @@ class CreateParcels(Resource):
 		data = self.parcel_parser.parse_args()
 		client_name = data['client_name']
 		user_id= self.user_id + 1
+		recipient_name = data['recipient_name']
 		package_desc = data['package_desc']
 		location = data['location']
 		destination = data['destination']
 		pickup_date = data['pickup_date']
-		parcel.new_parcel(client_name, user_id, package_desc, location, destination, pickup_date)
+		parcel.new_parcel(client_name, user_id, recipient_name, package_desc, location, destination, pickup_date)
 		return make_response(jsonify({"message": "Parcel order created successfully"}), 201)
 
 

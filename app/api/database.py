@@ -1,21 +1,25 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from os import getenv
+import os
 from urllib.parse import urlparse
+from config import config_set
+
 from .db_keys import access_keys as ak
 
-config_desc = getenv('FLASK_ENV', default="development")
+config_desc = os.getenv('FLASK_ENV')
+print(config_desc)
 
 
 
 class DbConnections():
 	"""Connect to the database"""
 	def __init__(self):
+		db_choice = config_set[config_desc]
 		self.connect = psycopg2.connect(
-			database = ak["dbname"],
-			user = ak["user"],
-			password = ak["password"],
-			host = ak["host"])
+			database = db_choice().DBNAME,
+			user = db_choice().DBUSER,
+			password = db_choice().DBPASS,
+			host = db_choice().DBHOST)
 		self.cur = self.connect.cursor(cursor_factory = RealDictCursor)
 
 	def create_tables(self):
@@ -57,8 +61,6 @@ class DbConnections():
 		self.cur.execute(result)
 		self.connect.commit()
 		return result
-
-
 
 	def execute(self, query):
 		try:
