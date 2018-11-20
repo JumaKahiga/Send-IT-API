@@ -59,9 +59,6 @@ class ParcelOrder():
     def parcels_list(self):
         pass
 
-    def single_parcel(self):
-        pass
-
     def specific_user_orders(self, user_id):
         parcel_list= []
         for parcel in self.db:
