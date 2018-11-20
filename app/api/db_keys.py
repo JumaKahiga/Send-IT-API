@@ -1,0 +1,1 @@
+access_keys= {"dbname":"sendit_db", 'user': 'sendit_admin', 'host': 'localhost', 'password': 'andela'}
