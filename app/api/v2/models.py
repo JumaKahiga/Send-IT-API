@@ -57,33 +57,14 @@ class ParcelOrder():
     def parcels_list(self):
         pass
 
-    # def single_parcel(self, parcel_id):
-    #     percels = [parcel for parcel in parcels if parcel["parcel_id"] == parcel_id]
-    #     if not percels:
-    #         return jsonify({'parcel': 'Not Available'})
-    #     else:
-    #         return percels[0]
+    def single_parcel(self):
+        pass
 
-    # def cancel_order(self, parcel_id):
-    #     for parcel in parcels:
-    #         if parcel["parcel_id"] != parcel_id:
-    #             return jsonify({'parcel': "Parcel not found"})
-    #         elif parcel["status"] == cancelled:
-    #             return jsonify({'parcel': "Order already cancelled"})
-    #         elif parcel['parcel_id'] == parcel_id:
-    #             parcel.update({"status": cancelled})
-    #             return {'parcel': 'Order Cancelled'}
+    def cancel_order(self):
+        pass
 
-    def specific_user_orders(self, user_id):
-        parcel_list= []
-        for parcel in self.db:
-            if parcel['user_id'] == user_id:
-                parcel_list.append(parcel)
-        if not parcel_list:
-            return {'parcel': 'Not Available'}
-        return parcel_list
+    def specific_user_orders(self):
+        pass
         		
     def clear(self):
-    	self.db = []
-
-
+    	pass
