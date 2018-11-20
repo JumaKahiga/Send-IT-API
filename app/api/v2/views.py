@@ -1,7 +1,7 @@
 from flask import request, Blueprint, make_response, jsonify
 from flask_restful import Resource, Api
 from flask_restful.reqparse import RequestParser
-from app.api.v1.models import ParcelOrder, UserModel
+from app.api.v2.models import ParcelOrder, UserModel
 from app.api.utilities.validators import email_validator
 
 
@@ -69,7 +69,6 @@ class CreateParcels(Resource):
 		destination = data['destination']
 		pickup_date = data['pickup_date']
 		parcel.new_parcel(client_name, user_id, package_desc, location, destination, pickup_date)
-		parcels = parcel.db
 		return make_response(jsonify({"message": "Parcel order created successfully"}), 201)
 
 
@@ -119,10 +118,10 @@ class UserSpecificOrders(Resource):
 		return single_user_orders
 
 
-v1 = Blueprint('v1', __name__, url_prefix='/api/v1')
+v2 = Blueprint('v2', __name__, url_prefix='/api/v2')
 
 
-api = Api(v1, catch_all_404s= True)
+api = Api(v2, catch_all_404s= True)
 
 
 # Add parcel resources
