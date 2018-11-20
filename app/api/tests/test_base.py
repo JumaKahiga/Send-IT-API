@@ -1,12 +1,13 @@
 import unittest
+import os
 import testing.postgresql
 from app import create_app
 from app.api.v2.models import ParcelOrder, UserModel
-from app.api.database import db
-
+from app.api.tests.k import testconfig as config_desc
+from app.api.database import DbConnections
 
 parcels = ParcelOrder()
-mteja= UserModel()
+mteja = UserModel()
 
 
 parcel_dummy_data= {"parcel_id": 2,

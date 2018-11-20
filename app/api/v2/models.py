@@ -1,4 +1,5 @@
 from flask import jsonify
+from app.api.tests.k import devconfig as config_desc
 from app.api.database import db
 
 db.create_tables()
@@ -60,6 +61,18 @@ class ParcelOrder():
 
     def single_parcel(self):
         pass
+
+    def specific_user_orders(self, user_id):
+        parcel_list= []
+        for parcel in self.db:
+            if parcel['user_id'] == user_id:
+                parcel_list.append(parcel)
+        if not parcel_list:
+            return {'parcel': 'Not Available'}
+        return parcel_list
+        		
+    def clear(self):
+    	self.db = []
 
     def cancel_order(self):
         pass
