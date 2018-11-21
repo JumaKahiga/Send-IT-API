@@ -9,6 +9,9 @@ parcel = ParcelOrder()
 mteja= UserModel()
 
 
+#User roles
+admin = 1
+user = 2
 
 class CreateUser(Resource):
 	def __init__(self):
@@ -24,8 +27,9 @@ class CreateUser(Resource):
 		email = user_data.get("email")
 		password = user_data.get("password")
 		contact_phone = user_data.get("contact_phone")
+		role = user
 		if email_validator(email):
-			mteja.new_user(username, email, password, contact_phone)
+			mteja.new_user(username, email, password, contact_phone, role)
 			return make_response(jsonify({"message": "User registration successful"}), 201)
 		else:
 			return jsonify({"message": "Please enter valid email"})
