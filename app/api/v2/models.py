@@ -70,9 +70,7 @@ class ParcelOrder():
         all_orders = json.dumps(all_orders, default=str)
         return all_orders
 
-
-
-    def specific_user_orders(self, user_id):
+    def single_parcel(self, user_id):
         pass
         		
     def clear(self):
