@@ -1,8 +1,6 @@
 import json
 from app.api.database import db
 
-db.create_tables()
-
 # User roles
 admin = 1
 user = 2
@@ -32,17 +30,18 @@ class UserModel(object):
     def single_user(self):
         pass
 
-# Order status after pickup
-pending = "Waiting for Courier"
-on_transit = "On Transit"
-delivered = "Delivered"
-cancelled = "Cancelled"
-
+# Order status
+order_status = {
+	"pending" : "Waiting for Courier",
+	"on_transit" : "On Transit",
+	"delivered" : "Delivered",
+	"cancelled": "Cancelled"
+}
 
 class ParcelOrder():
     """Creating model for parcels"""
     def __init__(self):
-        self.parcel_status = pending
+        self.parcel_status = order_status["pending"]
         self.db = db
 
     def new_parcel(self,client_name, user_id, recipient_name, package_desc, location, destination, pickup_date):    	

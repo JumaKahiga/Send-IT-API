@@ -5,7 +5,6 @@ from config import config_set
 
 config_desc = os.getenv('FLASK_ENV')
 
-
 class DbConnections():
 	"""Connect to the database"""
 
@@ -47,6 +46,12 @@ class DbConnections():
 			finally:
 				self.connect.commit()
 
+	def drop_tables(self):
+		query = """ DROP TABLE IF EXISTS users_tb, parcels_tb CASCADE """
+		self.cur.execute(query)
+		self.connect.commit()
+
+
 	def insert(self, table, payload, return_id):
 		columns = ", ".join(payload.keys())
 		values = "','".join(map(str, payload.values()))
@@ -68,6 +73,9 @@ class DbConnections():
 		self.cur.execute(result)
 		result = self.cur.fetchall()
 		return result
+
+	def update_details(self):
+		result = """ UPDATE {} SET {} = '{}' WHERE {} = {} """
 
 
 	def execute(self, query):
