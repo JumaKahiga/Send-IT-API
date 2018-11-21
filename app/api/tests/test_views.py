@@ -16,6 +16,10 @@ class TestParcel(BaseTest):
 		respo= self.client.get('/api/v2/parcels')
 		self.assertEqual(respo.status_code, 200)
 
+	def test_single_order(self):
+		pass
+
+
 
 if __name__ == "__main__":
 	unittest.main()
