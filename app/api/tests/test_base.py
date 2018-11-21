@@ -1,15 +1,16 @@
 import unittest
 from app import create_app
-from app.api.v1.models import ParcelOrder, UserModel
-
+from app.api.v2.models import ParcelOrder, UserModel
+from app.api.database import db
 
 parcels = ParcelOrder()
-mteja= UserModel()
+mteja = UserModel()
 
 
-parcel_dummy_data= {"client_name": "John Doe", 
+parcel_dummy_data= {"parcel_id": 2,
+					"client_name": "John Doe", 
 					"user_id": 5,
-					"parcel_id": 2,
+					"recipient_name": "Mark Joe",
 					"package_desc": "Television", 
 					"location": "Mirema", 
 					"destination": "Buruburu", 
@@ -29,7 +30,8 @@ user_dummy_data= {
 class BaseTest(unittest.TestCase):
 	"""docstring for BaseTest"""
 	def setUp(self):
-		self.app= create_app()
+		self.db = db
+		self.app= create_app(config="testing")
 		self.client= self.app.test_client(self)
 		self.parcel_id= str(parcel_dummy_data.get("parcel_id"))
 		self.sample_parcel= parcel_dummy_data
@@ -37,7 +39,7 @@ class BaseTest(unittest.TestCase):
 		self.user_id= str(user_dummy_data.get("user_id"))
 
 	def tearDown(self):
-		parcels.clear()
+		pass
 		
 
 
