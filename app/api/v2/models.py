@@ -14,17 +14,19 @@ class UserModel(object):
         self.user_role = customer
 
     def new_user(self, username, email, password, contact_phone, role):
-            new_user_data = {
+        new_user_data = {
             "username": username,
             "email": email,
             "password": password,
             "contact_phone": contact_phone,
-            "role": customer
+            "role": customer,
         }
 
         users_tb = "users_tb"
+        new_user_id = "user_id"
 
-        created_user = db.insert(users_tb, new_user_data)
+        created_user = db.insert(users_tb, new_user_data, new_user_id)
+        return created_user
 
 
     def single_user(self):
@@ -55,8 +57,9 @@ class ParcelOrder():
         }
 
         parcels_tb = "parcels_tb"
+        new_parcel_id = "user_id"
 
-        created_order = db.insert(parcels_tb, new_order_data)
+        created_order = db.insert(parcels_tb, new_order_data, new_parcel_id)
         return created_order
 
     def parcels_list(self):
