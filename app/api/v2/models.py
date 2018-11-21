@@ -15,18 +15,11 @@ class UserModel(object):
         self.user_role = customer
 
     def new_user(self, ):
-        query = "INSERT into users_tb(username, email, password, contact_phone, role)" "VALUES(%s, %s)"
-
-        created_user= self.user_db.append(user_data)
-        return created_user
+        pass:
 
     def single_user(self, user_id):
-        for user in users:
-            if user["user_id"] == user_id and type(user_id)==int:
-                return user
-            else:
-                return jsonify({'User': 'Not Available'})
-
+        pass
+        
 # Order status after pickup
 pending= "Waiting for Courier"
 on_transit= "On Transit"
@@ -60,13 +53,7 @@ class ParcelOrder():
         pass
 
     def specific_user_orders(self, user_id):
-        parcel_list= []
-        for parcel in self.db:
-            if parcel['user_id'] == user_id:
-                parcel_list.append(parcel)
-        if not parcel_list:
-            return {'parcel': 'Not Available'}
-        return parcel_list
+        pass
         		
     def clear(self):
     	self.db = []
