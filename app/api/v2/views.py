@@ -89,11 +89,10 @@ class SpecificOrder(Resource):
     		int(parcel_id)
     	except ValueError:
     		return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
-    	else:
+    	finally:
     		parcel_id= int(parcel_id)
 
-    	single_order = parcel.single_parcel(parcel_id)
-    	print(parcel_id)
+    	single_order = json.loads(parcel.single_parcel(parcel_id))
     	return single_order
 
 

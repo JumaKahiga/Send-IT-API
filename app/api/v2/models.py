@@ -70,8 +70,15 @@ class ParcelOrder():
         all_orders = json.dumps(all_orders, default=str)
         return all_orders
 
-    def single_parcel(self, user_id):
-        pass
+    def single_parcel(self, parcel_id):
+        parcels_tb = "parcels_tb"
+        column = "parcel_id"
+        sort_item = parcel_id
+
+        single_order = db.fetch_specific(parcels_tb, column, sort_item)
+        single_order = json.dumps(single_order, default=str)
+        return single_order
+
         		
     def clear(self):
     	self.db = []

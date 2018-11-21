@@ -1,4 +1,5 @@
 import unittest
+import os
 from app import create_app
 from app.api.v2.models import ParcelOrder, UserModel
 from app.api.database import db
@@ -31,6 +32,7 @@ class BaseTest(unittest.TestCase):
 	"""docstring for BaseTest"""
 	def setUp(self):
 		self.db = db
+		os.environ["FLASK_ENV"] = "testing"
 		self.app= create_app(config="testing")
 		self.client= self.app.test_client(self)
 		self.parcel_id= str(parcel_dummy_data.get("parcel_id"))

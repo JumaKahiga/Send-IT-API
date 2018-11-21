@@ -53,7 +53,6 @@ class DbConnections():
 
 
 		result = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING {}""".format(table, columns, values, return_id)
-		print(result)
 		self.cur.execute(result)
 		self.connect.commit()
 		return result
@@ -63,6 +62,13 @@ class DbConnections():
 		self.cur.execute(result_1)
 		result_2 = self.cur.fetchall()
 		return result_2
+
+	def fetch_specific(self, table, column, sort_item):
+		result = """ SELECT * FROM {} WHERE {} = '{}'""".format(table, column, sort_item)
+		self.cur.execute(result)
+		result = self.cur.fetchall()
+		return result
+
 
 	def execute(self, query):
 		try:
