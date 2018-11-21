@@ -47,12 +47,12 @@ class DbConnections():
 			finally:
 				self.connect.commit()
 
-	def insert(self, table, payload):
+	def insert(self, table, payload, return_id):
 		columns = ", ".join(payload.keys())
 		values = "','".join(map(str, payload.values()))
 
 
-		result = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING parcel_id""".format(table, columns, values)
+		result = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING ('{}')""".format(table, columns, values, return_id)
 		print(result)
 		self.cur.execute(result)
 		self.connect.commit()
