@@ -1,4 +1,5 @@
 from flask import request, Blueprint, make_response, jsonify
+import json
 from flask_restful import Resource, Api
 from flask_restful.reqparse import RequestParser
 from app.api.v2.models import ParcelOrder, UserModel
@@ -79,7 +80,7 @@ class CreateParcels(Resource):
 
 class AllOrders(Resource):
     def get(self):
-        pass
+        return json.loads(parcel.all_parcels())
 
 
 class SpecificOrder(Resource):

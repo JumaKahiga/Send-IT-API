@@ -52,11 +52,17 @@ class DbConnections():
 		values = "','".join(map(str, payload.values()))
 
 
-		result = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING ('{}')""".format(table, columns, values, return_id)
+		result = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING {}""".format(table, columns, values, return_id)
 		print(result)
 		self.cur.execute(result)
 		self.connect.commit()
 		return result
+
+	def fetch_all(self, table):
+		result_1 = """ SELECT * FROM {} """.format(table)
+		self.cur.execute(result_1)
+		result_2 = self.cur.fetchall()
+		return result_2
 
 	def execute(self, query):
 		try:

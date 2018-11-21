@@ -1,4 +1,4 @@
-from flask import jsonify
+import json
 from app.api.database import db
 
 db.create_tables()
@@ -33,16 +33,17 @@ class UserModel(object):
         pass
 
 # Order status after pickup
-pending= "Waiting for Courier"
-on_transit= "On Transit"
-delivered= "Delivered"
-cancelled= "Cancelled"
+pending = "Waiting for Courier"
+on_transit = "On Transit"
+delivered = "Delivered"
+cancelled = "Cancelled"
 
 
 class ParcelOrder():
     """Creating model for parcels"""
     def __init__(self):
         self.parcel_status = pending
+        self.db = db
 
     def new_parcel(self,client_name, user_id, recipient_name, package_desc, location, destination, pickup_date):    	
         new_order_data = {
@@ -57,13 +58,19 @@ class ParcelOrder():
         }
 
         parcels_tb = "parcels_tb"
-        new_parcel_id = "user_id"
+        new_parcel_id = "parcel_id"
 
         created_order = db.insert(parcels_tb, new_order_data, new_parcel_id)
         return created_order
 
     def all_parcels(self):
-        pass
+        parcels_tb = "parcels_tb"
+
+        all_orders = db.fetch_all(parcels_tb)
+        all_orders = json.dumps(all_orders, default=str)
+        return all_orders
+
+
 
     def specific_user_orders(self, user_id):
         pass

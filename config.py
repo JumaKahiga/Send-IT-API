@@ -29,6 +29,7 @@ class TestingConfig(MainConfig):
 	DBUSER = "postgres"
 	DBHOST = "localhost"
 	DBPASS = "andela"
+	DB_URL = "postgresql://sendit_admin:password@localhost/sendit_test"
 
 
 config_set = {
