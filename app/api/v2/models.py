@@ -1,12 +1,11 @@
 from flask import jsonify
-from app.api.tests.k import devconfig as config_desc
 from app.api.database import db
 
 db.create_tables()
 
 # User roles
-customer = "Customer"
-site_admin = "Admin"
+customer = 2
+site_admin = 1
 
 
 class UserModel(object):
@@ -15,7 +14,20 @@ class UserModel(object):
         self.user_role = customer
 
     def new_user(self, username, email, password, contact_phone, role):
-        pass
+        new_user_data = {
+            "username": username,
+            "email": email,
+            "password": password,
+            "contact_phone": contact_phone,
+            "role": customer,
+        }
+
+        users_tb = "users_tb"
+        new_user_id = "user_id"
+
+        created_user = db.insert(users_tb, new_user_data, new_user_id)
+        return created_user
+
 
     def single_user(self):
         pass
@@ -45,9 +57,10 @@ class ParcelOrder():
         }
 
         parcels_tb = "parcels_tb"
+        new_parcel_id = "user_id"
 
-        order= db.insert(parcels_tb, new_order_data)
-        return "Parcel created successfully"
+        created_order = db.insert(parcels_tb, new_order_data, new_parcel_id)
+        return created_order
 
     def parcels_list(self):
         pass
