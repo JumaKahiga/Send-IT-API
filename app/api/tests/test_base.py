@@ -17,13 +17,13 @@ parcel_dummy_data= {"parcel_id": 2,
 					"pickup_date": "12 November 2018", 
 					"parcel_status": "Delivered"}
 
-
 user_dummy_data= {
+			"user_id": 5,
             "username": "Thomas Smith",
-            "user_id": 5,
             "email": "thomas@smith.com",
             "password": "pass1234",
             "contact_phone": "0712345678",
+            "role": 1
         }
 
 

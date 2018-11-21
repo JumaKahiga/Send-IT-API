@@ -14,12 +14,12 @@ class UserModel(object):
     def __init__(self):
         self.user_role = customer
 
-    def new_user(self, ):
-        pass:
-
-    def single_user(self, user_id):
+    def new_user(self, username, email, password, contact_phone, role):
         pass
-        
+
+    def single_user(self):
+        pass
+
 # Order status after pickup
 pending= "Waiting for Courier"
 on_transit= "On Transit"

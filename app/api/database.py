@@ -71,4 +71,4 @@ class DbConnections():
 		self.connect.close()
 
 
-db = DbConnections(config_desc)
+db = DbConnections()
