@@ -8,7 +8,6 @@ from app.api.utilities.validators import email_validator
 parcel = ParcelOrder()
 mteja= UserModel()
 
-
 #User roles
 admin = 1
 user = 2
@@ -80,7 +79,7 @@ class CreateParcels(Resource):
 
 class AllOrders(Resource):
     def get(self):
-        return parcel.db
+        pass
 
 
 class SpecificOrder(Resource):

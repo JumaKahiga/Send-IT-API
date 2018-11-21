@@ -4,14 +4,15 @@ from app.api.database import db
 db.create_tables()
 
 # User roles
-customer = 2
-site_admin = 1
+#User roles
+admin = 1
+user = 2
 
 
 class UserModel(object):
     """Creating user model"""
     def __init__(self):
-        self.user_role = customer
+        self.user_role = user
 
     def new_user(self, username, email, password, contact_phone, role):
         new_user_data = {
@@ -19,7 +20,7 @@ class UserModel(object):
             "email": email,
             "password": password,
             "contact_phone": contact_phone,
-            "role": customer,
+            "role": user,
         }
 
         users_tb = "users_tb"
@@ -62,7 +63,7 @@ class ParcelOrder():
         created_order = db.insert(parcels_tb, new_order_data, new_parcel_id)
         return created_order
 
-    def parcels_list(self):
+    def all_parcels(self):
         pass
 
     def specific_user_orders(self, user_id):
