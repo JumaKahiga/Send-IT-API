@@ -36,8 +36,9 @@ class UserModel(object):
         created_user = json.dumps(created_user, default=str)
         return created_user
 
-    def single_user(self):
+    def login_user(self, email, password):
         pass
+
 
 # Order status
 order_status = {

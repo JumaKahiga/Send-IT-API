@@ -13,7 +13,6 @@ class TestParcel(BaseTest):
 		print(result)
 		self.assertEqual(respo.status_code,201)
 		self.assertEqual(result["message"], "Parcel order created successfully")
-		print("\n",result,"\n")
 		self.assertEqual(self.sample_parcel['client_name'], result['data']['client_name'])
 
 	def test_all_parcels(self):
