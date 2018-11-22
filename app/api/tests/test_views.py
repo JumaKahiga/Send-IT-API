@@ -33,6 +33,12 @@ class TestParcel(BaseTest):
 		self.assertEqual(result["message"], "Parcel order location updated successfully")
 		self.assertEqual(respo.status_code, 200)
 
+	def test_update_destination(self):
+		respo = self.client.put('/api/v2/parcels/' + self.parcel_id + '/destination', data =json.dumps(self.destination2), content_type='application/json')
+		result = json.loads(respo.data.decode())
+		self.assertEqual(result["message"], "Parcel order destination updated successfully")
+		self.assertEqual(respo.status_code, 200)
+
 
 
 if __name__ == "__main__":

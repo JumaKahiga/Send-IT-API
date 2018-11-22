@@ -28,6 +28,7 @@ user_dummy_data= {
         }
 
 location_sample= {"location": "Oyugis"}
+destination_sample= {"destination": "Kangari"}
 
 
 class BaseTest(unittest.TestCase):
@@ -41,6 +42,7 @@ class BaseTest(unittest.TestCase):
 		self.sample_parcel= parcel_dummy_data
 		self.status2= "Delivered"
 		self.location2= location_sample
+		self.destination2= destination_sample
 		self.sample_user= user_dummy_data
 		self.user_id= str(user_dummy_data.get("user_id"))
 
