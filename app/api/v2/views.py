@@ -102,7 +102,7 @@ class CancelOrder(Resource):
  			int(parcel_id)
  		except ValueError:
  			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
- 		else:
+ 		finally:
  			parcel_id= int(parcel_id)
 
  		updated_order= parcel.cancel_order(parcel_id)
@@ -121,6 +121,21 @@ class UserSpecificOrders(Resource):
 
 		single_user_orders= parcel.specific_user_orders(user_id)
 		return single_user_orders
+
+class UpdateOrderStatus(Resource):
+	def put(self, parcel_id):
+		try:
+			int(parcel_id)
+		except ValueError:
+			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
+		finally:
+			parcel_id = int(parcel_id)
+
+		updated_order = parcel.update_status(parcel_id)
+		return updated_order
+		return make_response(jsonify({"message": "Parcel order status updated successfully"}))
+
+
 
 
 v2 = Blueprint('v2', __name__, url_prefix='/api/v2')
