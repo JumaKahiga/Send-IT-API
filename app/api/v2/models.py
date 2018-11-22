@@ -118,7 +118,14 @@ class ParcelOrder():
         return show_order
 
     def user_orders(self, user_id):
-        pass
+        """Fetches orders for a specific user"""
+        parcels_tb = "parcels_tb"
+        column = "user_id"
+        sort_item = user_id
+
+        user_orders = db.fetch_specific(parcels_tb, column, sort_item)
+        user_orders = json.dumps(user_orders, default=str)
+        return user_orders
 
     def clear(self):
     	self.db = []
