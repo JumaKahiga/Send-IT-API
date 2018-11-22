@@ -122,7 +122,9 @@ class UserSpecificOrders(Resource):
 		single_user_orders= parcel.specific_user_orders(user_id)
 		return single_user_orders
 
+
 class UpdateOrderStatus(Resource):
+	"""Updating order status."""
 	def put(self, parcel_id):
 		try:
 			int(parcel_id)
@@ -133,6 +135,19 @@ class UpdateOrderStatus(Resource):
 
 		updated_order = parcel.update_status(parcel_id)
 		return make_response(jsonify({"message": "Parcel order status updated successfully"}), 200)
+
+
+class UpdateOrderLocation(Resource):
+	"""Updating order location"""
+	def __init__(self):
+		self.parcel_parser= RequestParser()
+		self.parcel_parser.add_argument("location", type=str, required=True, help="Invalid location details")
+
+	def put(self, parcel_id):
+		pass
+		# data = self.parcel_parser.parse_args()
+		# location = data['location']
+		
 
 
 
@@ -150,6 +165,7 @@ api.add_resource(AllOrders, "/parcels", strict_slashes= False)
 api.add_resource(SpecificOrder, '/parcels/<parcel_id>', strict_slashes= False)
 api.add_resource(CancelOrder, '/parcels/<parcel_id>/cancel', strict_slashes= False)
 api.add_resource(UpdateOrderStatus, '/parcels/<parcel_id>/status', strict_slashes= False)
+api.add_resource(UpdateOrderLocation, '/parcels/<parcel_id>/presentLocation', strict_slashes= False)
 
 
 # Add user resources
