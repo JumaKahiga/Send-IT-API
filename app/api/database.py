@@ -52,15 +52,18 @@ class DbConnections():
 		self.connect.commit()
 
 
-	def insert(self, table, payload, return_id):
+	def insert(self, table, payload, return_val):
 		columns = ", ".join(payload.keys())
-		values = "','".join(map(str, payload.values()))
+		values = "', '".join(map(str, payload.values()))
+
+		returned_values = ",".join(map(str, return_val.values()))
 
 
-		result = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING {}""".format(table, columns, values, return_id)
-		result = self.cur.execute(result)
+		results = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING {} """.format(table, columns, values, returned_values)
+		result = self.cur.execute(results)
 		self.connect.commit()
-		return result
+		result_2 = self.cur.fetchone()
+		return result_2
 
 	def fetch_all(self, table):
 		result_1 = """ SELECT * FROM {} """.format(table)
