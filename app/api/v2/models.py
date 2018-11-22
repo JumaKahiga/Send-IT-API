@@ -38,12 +38,13 @@ class UserModel(object):
 
     def login_user(self, email, password):
         """Method for login user"""
-        pass_chk = password_check.check_pass(password, email)
+        input_chk = password_check.pass_hash_salt(password, email)
+        db_chk = password_check.check_pass(email)
 
-        if not pass_chk:
-            return "User not found"
+        if db_chk == input_chk:
+            return True
         else:
-            return "Login successful"
+            return False
 
 
 # Order status

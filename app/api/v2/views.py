@@ -67,10 +67,9 @@ class UserLogin(Resource):
 			return make_response(jsonify({"message": "Please enter a valid email"}))
 		else:
 			login_data = mteja.login_user(email, password)
-			return login_data
 
-		if login_data == "Login successful":
-			return make_response(jsonify({"message": login_data}))
+		if login_data == True:
+			return make_response(jsonify({"message": "Sign in successful"}))
 		else:
 			return make_response(jsonify({"message": "User not found"}))
 
