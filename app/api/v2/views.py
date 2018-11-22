@@ -43,7 +43,7 @@ class CreateUser(Resource):
 				{"message": "User registration successful",
 				 "data": new_user}), 201)
 		else:
-			return jsonify({"message": "Please enter a valid email"})
+			return make_response(jsonify({"message": "Please enter a valid email"}), 400)
 
 
 class UserLogin(Resource):
@@ -64,14 +64,14 @@ class UserLogin(Resource):
 		email_chk = email_validator(email)
 
 		if not email_chk:
-			return make_response(jsonify({"message": "Please enter a valid email"}))
+			return make_response(jsonify({"message": "Please enter a valid email"}), 400)
 		else:
 			login_data = mteja.login_user(email, password)
 
 		if login_data == True:
-			return make_response(jsonify({"message": "Sign in successful"}))
+			return make_response(jsonify({"message": "Sign in successful"}), 200)
 		else:
-			return make_response(jsonify({"message": "User not found"}))
+			return make_response(jsonify({"message": "User not found"}), 406)
 
 
 """ Parcel Models."""
