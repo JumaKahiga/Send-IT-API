@@ -125,8 +125,7 @@ class UserSpecificOrders(Resource):
 		else:
 			user_id= int(user_id)
 
-		single_user_orders= parcel.specific_user_orders(user_id)
-		return single_user_orders
+		pass
 
 
 class UpdateOrderStatus(Resource):

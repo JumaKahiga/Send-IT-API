@@ -117,14 +117,11 @@ class ParcelOrder():
         show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
         return show_order
 
+    def user_orders(self, user_id):
+        pass
+
     def clear(self):
     	self.db = []
 
     def cancel_order(self):
         pass
-
-    def specific_user_orders(self):
-        pass
-        		
-    def clear(self):
-    	pass
