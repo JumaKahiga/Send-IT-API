@@ -16,7 +16,7 @@ parcel_dummy_data= {"parcel_id": 2,
 					"location": "Mirema", 
 					"destination": "Buruburu", 
 					"pickup_date": "12 November 2018", 
-					"parcel_status": "Delivered"}
+					"parcel_status": "On Transit"}
 
 user_dummy_data= {
 			"user_id": 5,
@@ -37,6 +37,7 @@ class BaseTest(unittest.TestCase):
 		self.client= self.app.test_client(self)
 		self.parcel_id= str(parcel_dummy_data.get("parcel_id"))
 		self.sample_parcel= parcel_dummy_data
+		self.status2= "Delivered"
 		self.sample_user= user_dummy_data
 		self.user_id= str(user_dummy_data.get("user_id"))
 
