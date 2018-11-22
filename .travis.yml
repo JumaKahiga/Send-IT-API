@@ -15,6 +15,7 @@ before_script:
   - export FLASK_ENV="testing"
   - psql -c 'create database sendit_test;' -U postgres
   - export DB_URL='postgresql://postgres@localhost:5432/sendit_test'
+  - flask migrate
 
 script:
   - pytest --cov=app/
