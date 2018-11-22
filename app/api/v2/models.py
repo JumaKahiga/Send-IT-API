@@ -101,6 +101,9 @@ class ParcelOrder():
         show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
         return show_order
 
+    def update_destination(self, parcel_id, destination):
+        pass
+
     def clear(self):
     	self.db = []
 

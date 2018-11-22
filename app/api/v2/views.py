@@ -140,8 +140,8 @@ class UpdateOrderStatus(Resource):
 class UpdateOrderLocation(Resource):
 	"""Updating order location"""
 	def __init__(self):
-		self.parcel_parser= RequestParser()
-		self.parcel_parser.add_argument("location", type=str, required=True, help="Invalid location details")
+		self.location_parser= RequestParser()
+		self.location_parser.add_argument("location", type=str, required=True, help="Invalid location details")
 
 	def put(self, parcel_id):
 		try:
@@ -151,18 +151,21 @@ class UpdateOrderLocation(Resource):
 		finally:
 			parcel_id = int(parcel_id)
 
-		data = self.parcel_parser.parse_args()
+		data = self.location_parser.parse_args()
 		location = data['location']
 		parcel_id = parcel_id
 
 		updated_order = parcel.update_location(parcel_id, location)
 		return make_response(jsonify({"message": "Parcel order location updated successfully"}), 200)
 
+class UpdateOrderDestination(Resource):
+	"""Updating order destination"""
+	def __init__(self):
+		self.destination_parser = RequestParser()
+		self.destination_parser.add_argument("destination", type=str, required=True, help="Destination cannot be blank")
 
-		
-
-
-
+	def put(self, parcel_id):
+		pass
 
 
 v2 = Blueprint('v2', __name__, url_prefix='/api/v2')
@@ -178,6 +181,7 @@ api.add_resource(SpecificOrder, '/parcels/<parcel_id>', strict_slashes= False)
 api.add_resource(CancelOrder, '/parcels/<parcel_id>/cancel', strict_slashes= False)
 api.add_resource(UpdateOrderStatus, '/parcels/<parcel_id>/status', strict_slashes= False)
 api.add_resource(UpdateOrderLocation, '/parcels/<parcel_id>/presentLocation', strict_slashes= False)
+api.add_resource(UpdateOrderDestination, '/parcels/<parcel_id>/destination', strict_slashes= False)
 
 
 # Add user resources
