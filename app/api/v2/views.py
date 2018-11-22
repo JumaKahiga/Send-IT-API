@@ -57,7 +57,7 @@ class UserLogin(Resource):
         email = user_data.get("email")
         password = user_data.get("password")
         if email_validator(email):
-            login_user_user = mteja.login_user(email, password)
+            new_user = mteja.login_user(email, password)
             login_user = json.loads(new_user)
             return make_response(jsonify(
                 {"message": "Login successful",
