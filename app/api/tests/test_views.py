@@ -25,9 +25,7 @@ class TestParcel(BaseTest):
 		parcel_id = self.parcel_id
 		respo = self.client.put('/api/v2/parcels/' + parcel_id + '/status', data = json.dumps(self.status2), content_type='application/json')
 		result= json.loads(respo.data.decode())
-		self.assertEqual(respo.status_code,200)
-		self.assertEqual(respo.data, "Parcel order status updated successfully")
-
+		self.assertEqual(respo.status_code, 200)
 
 
 

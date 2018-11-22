@@ -132,8 +132,8 @@ class UpdateOrderStatus(Resource):
 			parcel_id = int(parcel_id)
 
 		updated_order = parcel.update_status(parcel_id)
-		return updated_order
-		return make_response(jsonify({"message": "Parcel order status updated successfully"}))
+		return make_response(jsonify({"message": "Parcel order status updated successfully"}), 200)
+
 
 
 

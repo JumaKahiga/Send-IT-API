@@ -58,7 +58,7 @@ class DbConnections():
 
 
 		result = """ INSERT INTO {} ({}) VALUES ('{}') RETURNING {}""".format(table, columns, values, return_id)
-		self.cur.execute(result)
+		result = self.cur.execute(result)
 		self.connect.commit()
 		return result
 
@@ -74,8 +74,12 @@ class DbConnections():
 		result = self.cur.fetchall()
 		return result
 
-	def update_details(self):
-		result = """ UPDATE {} SET {} = '{}' WHERE {} = {} """
+	def update_details(self, table, column_name, column_value, sort_item, sort_value):
+		"""Updates table column values for a row matching a specific parameter"""
+		result = """ UPDATE {} SET {} = '{}' WHERE {} = {} """.format(table, column_name, column_value, sort_item, sort_value)
+		self.cur.execute(result)
+		self.connect.commit()
+		return result
 
 
 	def execute(self, query):
