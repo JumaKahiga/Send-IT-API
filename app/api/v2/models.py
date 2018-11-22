@@ -9,7 +9,7 @@ user = 2
 
 
 class UserModel(object):
-    """Creating user model"""
+    """Model for Users."""
     def __init__(self):
         self.user_role = user
 
@@ -41,12 +41,12 @@ order_status = {
 }
 
 class ParcelOrder():
-    """Creating model for parcels"""
+    """Model for creating, getting, and updating parcels."""
     def __init__(self):
         self.parcel_status = order_status["pending"]
         self.db = db
 
-    def new_parcel(self,client_name, user_id, recipient_name, package_desc, location, destination, pickup_date):    	
+    def new_parcel(self,client_name, user_id, recipient_name, package_desc, location, destination, pickup_date):   	
         new_order_data = {
             "client_name": client_name,
             "user_id": user_id,
@@ -55,8 +55,7 @@ class ParcelOrder():
             "location": location,
             "destination": destination,
             "pickup_date": pickup_date,
-            "status": self.parcel_status,
-        }
+            "status": self.parcel_status}
 
         parcels_tb = "parcels_tb"
         new_parcel_id = "parcel_id"
@@ -90,6 +89,9 @@ class ParcelOrder():
     	updated_order = db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
     	show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
     	return show_order
+
+    def update_location(self, parcel_id, location):
+    	pass
 
         		
     def clear(self):

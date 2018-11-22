@@ -27,6 +27,12 @@ class TestParcel(BaseTest):
 		result= json.loads(respo.data.decode())
 		self.assertEqual(respo.status_code, 200)
 
+	def test_update_location(self):
+		parcel_id = self.parcel_id
+		respo = self.client.put('/api/v2/parcels/' + parcel_id + '/presentLocation', data = json.dumps(self.status2), content_type='application/json')
+		result= json.loads(respo.data.decode())
+		self.assertEqual(respo.status_code, 200)
+
 
 
 if __name__ == "__main__":
