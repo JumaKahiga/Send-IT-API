@@ -14,7 +14,7 @@ class PasswordAuth():
 
     def check_pass(self, password, email):
         """Checks if password input is correct."""
-        if pass_hash_salt(password, email) == hashed_pass:
+        if self.pass_hash_salt(password, email) == hashed_pass:
             return True
         return False
 

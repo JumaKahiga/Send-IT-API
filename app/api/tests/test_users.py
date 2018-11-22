@@ -10,7 +10,6 @@ class TestUser(BaseTest):
         respo = self.client.post(
             'api/v2/auth/signup', data=json.dumps(self.sample_user), content_type='application/json')
         result = json.loads(respo.data.decode())
-        print("\n", result, "\n")
         self.assertEqual(respo.status_code, 201)
         self.assertEqual(result["message"], "User registration successful")
         self.assertEqual(self.sample_user['username'], result[

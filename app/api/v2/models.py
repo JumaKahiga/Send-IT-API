@@ -37,7 +37,13 @@ class UserModel(object):
         return created_user
 
     def login_user(self, email, password):
-        pass
+        """Method for login user"""
+        pass_chk = password_check.check_pass(password, email)
+
+        if not pass_chk:
+            return "User not found"
+        else:
+            return "Login successful"
 
 
 # Order status
