@@ -125,7 +125,8 @@ class UserSpecificOrders(Resource):
 		else:
 			user_id= int(user_id)
 
-		pass
+		single_user_orders = json.loads(parcel.user_orders(user_id))
+		return single_user_orders
 
 
 class UpdateOrderStatus(Resource):
