@@ -1,6 +1,8 @@
 import json
 from app.api.database import db
 
+db.create_tables()
+
 # User roles
 admin = 1
 user = 2
