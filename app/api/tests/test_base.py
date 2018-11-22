@@ -27,7 +27,7 @@ user_dummy_data= {
             "role": 1
         }
 
-location_sample= "Oyugis"
+location_sample= {"location": "Oyugis"}
 
 
 class BaseTest(unittest.TestCase):

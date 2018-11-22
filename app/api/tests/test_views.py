@@ -30,7 +30,7 @@ class TestParcel(BaseTest):
 	def test_update_location(self):
 		respo = self.client.put('/api/v2/parcels/' + self.parcel_id + '/presentLocation', data =json.dumps(self.location2), content_type='application/json')
 		result = json.loads(respo.data.decode())
-		self.assertEqual(result, self.location2)
+		self.assertEqual(result["message"], "Parcel order location updated successfully")
 		self.assertEqual(respo.status_code, 200)
 
 

@@ -156,7 +156,7 @@ class UpdateOrderLocation(Resource):
 		parcel_id = parcel_id
 
 		updated_order = parcel.update_location(parcel_id, location)
-		return make_response(jsonify({"message": "Parcel order status updated successfully"}), 200)
+		return make_response(jsonify({"message": "Parcel order location updated successfully"}), 200)
 
 
 		
