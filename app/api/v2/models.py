@@ -46,7 +46,7 @@ class ParcelOrder():
         self.parcel_status = order_status["pending"]
         self.db = db
 
-    def new_parcel(self,client_name, user_id, recipient_name, package_desc, location, destination, pickup_date):   	
+    def new_parcel(self,client_name, user_id, recipient_name, package_desc, location, destination, pickup_date):	
         new_order_data = {
             "client_name": client_name,
             "user_id": user_id,
@@ -64,6 +64,7 @@ class ParcelOrder():
         return created_order
 
     def all_parcels(self):
+        """Fetches all orders"""
         parcels_tb = "parcels_tb"
 
         all_orders = db.fetch_all(parcels_tb)
@@ -71,6 +72,7 @@ class ParcelOrder():
         return all_orders
 
     def single_parcel(self, parcel_id):
+        """Fetches single order based on parcel_id"""
         parcels_tb = "parcels_tb"
         column = "parcel_id"
         sort_item = parcel_id
@@ -80,17 +82,19 @@ class ParcelOrder():
         return single_order
 
     def update_status(self, parcel_id):
-    	parcels_tb = "parcels_tb"
-    	column_name = "status"
-    	column_value = order_status["delivered"]
-    	sort_item = "parcel_id"
-    	sort_value = parcel_id
+        """Updates status for order with the specified parcel_id"""
+        parcels_tb = "parcels_tb"
+        column_name = "status"
+        column_value = order_status["delivered"]
+        sort_item = "parcel_id"
+        sort_value = parcel_id
 
-    	db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
-    	show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
-    	return show_order
+        db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
+        show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
+        return show_order
 
     def update_location(self, parcel_id, location):
+        """Updates location for order with the specified parcel_id"""
         parcels_tb = "parcels_tb"
         column_name = "location"
         column_value = location
@@ -102,7 +106,16 @@ class ParcelOrder():
         return show_order
 
     def update_destination(self, parcel_id, destination):
-        pass
+        """Updates destination for order with the specified parcel_id"""
+        parcels_tb = "parcels_tb"
+        column_name = "destination"
+        column_value = destination
+        sort_item = "parcel_id"
+        sort_value = parcel_id
+
+        db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
+        show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
+        return show_order
 
     def clear(self):
     	self.db = []

@@ -55,7 +55,9 @@ class AllUsers(Resource):
 
 
 class CreateParcels(Resource):
+	"""Creates a new parcel order"""
 	def __init__(self):
+		"""Integrates RequestParser for input validation"""
 		self.user_id= 100
 		self.parcel_parser= RequestParser()
 		self.parcel_parser.add_argument("client_name", type=str, required=True, help="Invalid username. Please try again")
@@ -66,6 +68,7 @@ class CreateParcels(Resource):
 		self.parcel_parser.add_argument("pickup_date", type=str, required=True, help="Please enter valid pickup date for the parcel")
 
 	def post(self):
+		"""Creates new order based on input given"""
 		data = self.parcel_parser.parse_args()
 		client_name = data['client_name']
 		user_id= self.user_id + 1
@@ -79,21 +82,23 @@ class CreateParcels(Resource):
 
 
 class AllOrders(Resource):
-    def get(self):
-        return json.loads(parcel.all_parcels())
+	"""Gets all orders"""
+	def get(self):
+		return json.loads(parcel.all_parcels())
 
 
 class SpecificOrder(Resource):
-    def get(self, parcel_id):
-    	try:
-    		int(parcel_id)
-    	except ValueError:
-    		return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
-    	finally:
-    		parcel_id= int(parcel_id)
+	"""Gets a specific order"""
+	def get(self, parcel_id):
+		try:
+			int(parcel_id)
+		except ValueError:
+			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
+		finally:
+			parcel_id= int(parcel_id)
 
-    	single_order = json.loads(parcel.single_parcel(parcel_id))
-    	return single_order
+		single_order = json.loads(parcel.single_parcel(parcel_id))
+		return single_order
 
 
 class CancelOrder(Resource):
@@ -111,6 +116,7 @@ class CancelOrder(Resource):
 
 
 class UserSpecificOrders(Resource):
+	"""Gets all orders for a single user"""
 	def get(self, user_id):
 		try:
 			int(user_id)
@@ -161,12 +167,23 @@ class UpdateOrderLocation(Resource):
 class UpdateOrderDestination(Resource):
 	"""Updating order destination"""
 	def __init__(self):
-		self.destination_parser = RequestParser()
-		self.destination_parser.add_argument("destination", type=str, required=True, help="Destination cannot be blank")
+		self.destination_parser= RequestParser()
+		self.destination_parser.add_argument("destination", type=str, required=True, help="Invalid destination details")
 
 	def put(self, parcel_id):
-		pass
+		try:
+			int(parcel_id)
+		except ValueError:
+			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
+		finally:
+			parcel_id = int(parcel_id)
 
+		data = self.destination_parser.parse_args()
+		destination = data['destination']
+		parcel_id = parcel_id
+
+		updated_order = parcel.update_destination(parcel_id, destination)
+		return make_response(jsonify({"message": "Parcel order destination updated successfully"}), 200)
 
 v2 = Blueprint('v2', __name__, url_prefix='/api/v2')
 
