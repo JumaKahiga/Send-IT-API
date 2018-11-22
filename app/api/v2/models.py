@@ -81,7 +81,15 @@ class ParcelOrder():
         return single_order
 
     def update_status(self, parcel_id):
-    	pass
+    	parcels_tb = "parcels_tb"
+    	column_name = "status"
+    	column_value = order_status["delivered"]
+    	sort_item = "parcel_id"
+    	sort_value = parcel_id
+
+    	updated_order = db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
+    	show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
+    	return show_order
 
         		
     def clear(self):
