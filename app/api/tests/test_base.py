@@ -27,6 +27,8 @@ user_dummy_data= {
             "role": 1
         }
 
+location_sample= "Oyugis"
+
 
 class BaseTest(unittest.TestCase):
 	"""docstring for BaseTest"""
@@ -38,6 +40,7 @@ class BaseTest(unittest.TestCase):
 		self.parcel_id= str(parcel_dummy_data.get("parcel_id"))
 		self.sample_parcel= parcel_dummy_data
 		self.status2= "Delivered"
+		self.location2= location_sample
 		self.sample_user= user_dummy_data
 		self.user_id= str(user_dummy_data.get("user_id"))
 

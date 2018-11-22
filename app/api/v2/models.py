@@ -86,14 +86,21 @@ class ParcelOrder():
     	sort_item = "parcel_id"
     	sort_value = parcel_id
 
-    	updated_order = db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
+    	db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
     	show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
     	return show_order
 
     def update_location(self, parcel_id, location):
-    	pass
+        parcels_tb = "parcels_tb"
+        column_name = "location"
+        column_value = location
+        sort_item = "parcel_id"
+        sort_value = parcel_id
 
-        		
+        db.update_details(parcels_tb, column_name, column_value, sort_item, sort_value)
+        show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
+        return show_order
+
     def clear(self):
     	self.db = []
 

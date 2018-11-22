@@ -144,9 +144,21 @@ class UpdateOrderLocation(Resource):
 		self.parcel_parser.add_argument("location", type=str, required=True, help="Invalid location details")
 
 	def put(self, parcel_id):
-		pass
-		# data = self.parcel_parser.parse_args()
-		# location = data['location']
+		try:
+			int(parcel_id)
+		except ValueError:
+			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
+		finally:
+			parcel_id = int(parcel_id)
+
+		data = self.parcel_parser.parse_args()
+		location = data['location']
+		parcel_id = parcel_id
+
+		updated_order = parcel.update_location(parcel_id, location)
+		return make_response(jsonify({"message": "Parcel order status updated successfully"}), 200)
+
+
 		
 
 
