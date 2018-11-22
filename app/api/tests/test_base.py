@@ -32,8 +32,20 @@ user_dummy_data = {
 }
 
 
-dummy_login = {"email": "thomas@smith.com",
-               "password": "pass1234"}
+dummy_login = {"email": "sam@gm.com",
+               "password": "kjl"}
+
+
+user_invalid_data = {
+    "user_id": 5,
+    "username": "Thomas Smith",
+    "email": "thomas.com",
+    "password": "pass1234",
+    "contact_phone": "0712345678",
+    "role": 1
+}
+
+bad_login = {"email": "sam", "password": "kjl"}
 
 
 location_sample = {"location": "Oyugis"}
@@ -54,6 +66,8 @@ class BaseTest(unittest.TestCase):
         self.location2 = location_sample
         self.destination2 = destination_sample
         self.sample_user = user_dummy_data
+        self.invalid_user = user_invalid_data
+        self.bad_login = bad_login
         self.sample_login = dummy_login
         self.user_id = str(user_dummy_data.get("user_id"))
 

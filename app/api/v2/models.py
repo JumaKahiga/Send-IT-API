@@ -37,7 +37,14 @@ class UserModel(object):
         return created_user
 
     def login_user(self, email, password):
-        pass
+        """Method for login user"""
+        input_chk = password_check.pass_hash_salt(password, email)
+        db_chk = password_check.check_pass(email)
+
+        if db_chk == input_chk:
+            return True
+        else:
+            return False
 
 
 # Order status
