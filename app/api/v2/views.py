@@ -149,6 +149,7 @@ api.add_resource(CreateParcels, "/parcel", strict_slashes= False)
 api.add_resource(AllOrders, "/parcels", strict_slashes= False)
 api.add_resource(SpecificOrder, '/parcels/<parcel_id>', strict_slashes= False)
 api.add_resource(CancelOrder, '/parcels/<parcel_id>/cancel', strict_slashes= False)
+api.add_resource(UpdateOrderStatus, '/parcels/<parcel_id>/status', strict_slashes= False)
 
 
 # Add user resources

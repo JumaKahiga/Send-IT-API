@@ -80,6 +80,9 @@ class ParcelOrder():
         single_order = json.dumps(single_order, default=str)
         return single_order
 
+    def update_status(self, parcel_id):
+    	pass
+
         		
     def clear(self):
     	self.db = []
