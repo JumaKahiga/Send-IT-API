@@ -39,29 +39,31 @@ class CreateUser(Resource):
             return make_response(jsonify(
                 {"message": "User registration successful",
                  "data": new_user}), 201)
-            # return json.loads(new_user)
         else:
             return jsonify({"message": "Please enter valid email"})
 
 
-class SpecificUser(Resource):
+class UserLogin(Resource):
+    def __init__(self):
+    	self.user_parser = RequestParser()
+    	self.user_parser.add_argument(
+		    "email", type=str, required=True, help="Invalid email")
+    	self.user_parser.add_argument(
+		    "password", required=True, help="Invalid password")
 
-    def get(self, user_id):
-        try:
-            int(user_id)
-        except ValueError:
-            return make_response(jsonify({"Error": "Please enter a valid User ID"}))
+    def post(self):
+        """Method logins user."""
+        user_data = self.user_parser.parse_args()
+        email = user_data.get("email")
+        password = user_data.get("password")
+        if email_validator(email):
+            login_user_user = mteja.login_user(email, password)
+            login_user = json.loads(new_user)
+            return make_response(jsonify(
+                {"message": "Login successful",
+                 "data": login_user}), 200)
         else:
-            user_id = int(user_id)
-
-        single_user = mteja.single_user(user_id)
-        return single_user
-
-
-class AllUsers(Resource):
-
-    def get(self):
-        return mteja.user_db
+            return jsonify({"message": "Login details are invalid"})
 
 
 class CreateParcels(Resource):
@@ -95,7 +97,7 @@ class CreateParcels(Resource):
         destination = data['destination']
         pickup_date = data['pickup_date']
         new_order = parcel.new_parcel(client_name, user_id, recipient_name,
-                          package_desc, location, destination, pickup_date)
+                                      package_desc, location, destination, pickup_date)
         new_order = json.loads(new_order)
         return make_response(jsonify({"message": "Parcel order created successfully",
                                       "data": new_order}), 201)
@@ -236,8 +238,7 @@ api.add_resource(UpdateOrderDestination,
 
 
 # Add user resources
-api.add_resource(CreateUser, "/users", strict_slashes=False)
-api.add_resource(AllUsers, "/users/all", strict_slashes=False)
-api.add_resource(SpecificUser, '/users/<user_id>', strict_slashes=False)
+api.add_resource(CreateUser, "/auth/signup", strict_slashes=False)
+api.add_resource(UserLogin, '/auth/login', strict_slashes=False)
 api.add_resource(UserSpecificOrders,
                  '/users/<user_id>/parcels', strict_slashes=False)
