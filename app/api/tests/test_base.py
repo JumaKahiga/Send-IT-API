@@ -4,10 +4,13 @@ from app import create_app
 from app.api.v2.models import ParcelOrder, UserModel
 from app.api.database import db
 
+
+# Create instances of models classes to be used in tests
 parcels = ParcelOrder()
 mteja = UserModel()
 
 
+# Dummy data to be used in tests
 parcel_dummy_data= {"parcel_id": 2,
 					"client_name": "John Doe", 
 					"user_id": 5,
