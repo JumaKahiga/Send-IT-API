@@ -1,5 +1,6 @@
 """Contain user registration, login, and any other authentication function."""
 import hashlib
+import json
 from app.api.database import db
 
 
@@ -19,8 +20,13 @@ class PasswordAuth():
         password = "password"
         sort_item = "sam@gm.com"
         db_return = db.fetch_pass(sort_item)
-        hashed_pass = db_return["password"]
-        return hashed_pass
+        print(db_return)
+        db_return = json.dumps(db_return)
+        if db_return == "null":
+            return False
+        else:
+            hashed_pass = db_return["password"]
+            return hashed_pass
 
 
 # Create instance of PasswordAuth class

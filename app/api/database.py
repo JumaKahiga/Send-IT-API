@@ -21,7 +21,7 @@ class DbConnections():
         users_tb = """ CREATE TABLE if not exists users_tb (
                 user_id serial PRIMARY KEY NOT NULL,
                 username varchar NOT NULL,
-                email varchar NOT NULL,
+                email varchar UNIQUE NOT NULL,
                 password varchar NOT NULL,
                 contact_phone int NOT NULL,
                 role varchar NOT NULL) """

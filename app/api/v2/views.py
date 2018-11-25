@@ -69,7 +69,7 @@ class UserLogin(Resource):
 			login_data = mteja.login_user(email, password)
 
 		if login_data == True:
-			return make_response(jsonify({"message": "Sign in successful"}), 200)
+			return make_response(jsonify({"message": "Login successful"}), 200)
 		else:
 			return make_response(jsonify({"message": "User not found"}), 406)
 
