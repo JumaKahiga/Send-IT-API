@@ -28,8 +28,9 @@ class DbConnections():
 
         parcels_tb = """ CREATE TABLE if not exists parcels_tb (
                 parcel_id serial PRIMARY KEY,
-                client_name varchar NOT NULL,
                 user_id int NOT NULL,
+                client_name varchar NOT NULL,
+                FOREIGN KEY (user_id) REFERENCES users_tb (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
                 recipient_name varchar NOT NULL,
                 package_desc varchar NOT NULL,
                 location varchar NOT NULL,
@@ -73,6 +74,12 @@ class DbConnections():
 
     def fetch_specific(self, table, column, sort_item):
         result = """ SELECT * FROM {} WHERE {} = '{}'""".format(table, column, sort_item)
+        self.cur.execute(result)
+        result = self.cur.fetchall()
+        return result
+
+    def fetch_user(self, sort_item):
+        result = """ SELECT user_id, username FROM users_tb WHERE users_id = '{}'""".format(sort_item)
         self.cur.execute(result)
         result = self.cur.fetchall()
         return result

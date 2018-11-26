@@ -82,7 +82,7 @@ class CreateParcels(Resource):
 
 	def __init__(self):
 		"""Integrates RequestParser for input validation"""
-		self.user_id = 100
+		self.user_id = 0
 		self.parcel_parser = RequestParser()
 		self.parcel_parser.add_argument(
 			"client_name", type=str, required=True, help="Invalid username. Please try again")
