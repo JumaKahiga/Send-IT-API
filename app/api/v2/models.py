@@ -39,14 +39,12 @@ class UserModel(object):
     def login_user(self, email, password):
         """Method for login user"""
         input_chk = password_check.pass_hash_salt(password, email)
-        print(input_chk)
         db_chk = password_check.check_pass(email)
-        print(db_chk)
 
-        if db_chk == False:
-            unregistered_user = "User not available. Please try api/v2/auth/signup"
+        if db_chk == "False":
+            unregistered_user = "User not available"
         elif db_chk != input_chk:
-            wrong_details = "Wrong login details. Please try again"
+            wrong_details = "Wrong login details"
             return wrong_details
         elif db_chk == input_chk:
             correct_details = "Login succesful"

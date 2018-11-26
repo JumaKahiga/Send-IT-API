@@ -17,12 +17,10 @@ class PasswordAuth():
     def check_pass(self, email):
         """Checks if password input is correct."""
         users_tb = "users_tb"
-        password = "password"
-        sort_item = "sam@gm.com"
-        db_return = db.fetch_pass(sort_item)
-        print(db_return)
-        db_return = json.dumps(db_return)
-        if db_return == "null":
+        email = "email"
+        sort_item = email
+        db_return = db.fetch_specific(users_tb, email, sort_item)
+        if db_return == []:
             return False
         else:
             hashed_pass = db_return["password"]
