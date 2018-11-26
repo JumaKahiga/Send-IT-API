@@ -1,5 +1,5 @@
 ### Build Badge
-[![Build Status](https://travis-ci.org/JumaKahiga/Send-IT-API.svg?branch=ch-readme-travis-update-162171298)](https://travis-ci.org/JumaKahiga/Send-IT-API)[![Coverage Status](https://coveralls.io/repos/github/JumaKahiga/Send-IT-API/badge.svg?branch=bg-fix-travis-coveralls-161881164)](https://coveralls.io/github/JumaKahiga/Send-IT-API?branch=bg-fix-travis-coveralls-161881164)
+[![Build Status](https://travis-ci.org/JumaKahiga/Send-IT-API.svg?branch=develop)](https://travis-ci.org/JumaKahiga/Send-IT-API)[![Coverage Status](https://coveralls.io/repos/github/JumaKahiga/Send-IT-API/badge.svg?branch=develop)](https://coveralls.io/github/JumaKahiga/Send-IT-API?branch=develop)
 
 # sendIT
 SendIT is an app for a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories
