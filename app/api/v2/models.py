@@ -41,10 +41,17 @@ class UserModel(object):
         input_chk = password_check.pass_hash_salt(password, email)
         db_chk = password_check.check_pass(email)
 
-        if db_chk == input_chk:
+        if db_chk == "False":
+            unregistered_user = "User not available"
+        elif db_chk != input_chk:
+            wrong_details = "Wrong login details"
+            return wrong_details
+        elif db_chk == input_chk:
+            correct_details = "Login succesful"
             return True
         else:
-            return False
+            unrecognized_resp = "Error recognizing the request"
+            return unrecognized_resp
 
 
 # Order status

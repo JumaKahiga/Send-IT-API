@@ -23,7 +23,7 @@ parcel_dummy_data = {"parcel_id": 2,
 
 
 user_dummy_data = {
-    "user_id": 5,
+    "user_id": 1,
     "username": "Thomas Smith",
     "email": "thomas@smith.com",
     "password": "pass1234",

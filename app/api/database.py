@@ -80,8 +80,8 @@ class DbConnections():
     def fetch_pass(self, email):
         result = """ SELECT password FROM users_tb WHERE email = '{}' """.format(email)
         self.cur.execute(result)
-        result = self.cur.fetchone()
-        return result
+        for password in self.cur.fetchall():
+            return password
 
     def update_details(self, table, column_name, column_value, sort_item, sort_value):
         """Updates table column values for a row matching a specific parameter"""
