@@ -1,5 +1,6 @@
 import unittest
 import json
+from flask_jwt_extended import jwt_required
 from app.api.tests.test_base import BaseTest
 
 
@@ -8,9 +9,8 @@ class TestParcel(BaseTest):
 	"""Class for unit tests for the ParcelOrder model."""
 	def test_new_parcel(self):
 		"""Tests creation of new parcel"""
-		respo= self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel), content_type='application/json')
+		respo= self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel), content_type='application/json', headers=dict(Authorization="Bearer" + self.access_token))
 		result= json.loads(respo.data.decode())
-		print(result)
 		self.assertEqual(respo.status_code,201)
 		self.assertEqual(result["message"], "Parcel order created successfully")
 		self.assertEqual(self.sample_parcel['client_name'], result['data']['client_name'])
