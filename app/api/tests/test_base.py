@@ -24,10 +24,10 @@ parcel_dummy_data = {"parcel_id": 2,
 
 user_dummy_data = {
     "user_id": 1,
-    "username": "Thomas Smith",
-    "email": "thomas@smith.com",
+    "username": "Maureen Dempsy",
+    "email": "mdempsy@smith.com",
     "password": "pass1234",
-    "contact_phone": "0712345678",
+    "contact_phone": "0712345679",
     "role": 1
 }
 

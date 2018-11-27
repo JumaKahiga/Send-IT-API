@@ -84,6 +84,18 @@ class DbConnections():
         result = self.cur.fetchall()
         return result
 
+    def fetch_single(self, column, sort_item):
+        result = """ SELECT {} from users_tb WHERE email = '{}' """.format(column, sort_item)
+        self.cur.execute(result)
+        result = self.cur.fetchone()
+        return result
+
+    def fetch_number(self, sort_item):
+        result = """ SELECT contact_phone from users_tb WHERE contact_phone = '{}' """.format(sort_item)
+        self.cur.execute(result)
+        result = self.cur.fetchone()
+        return result
+
     def fetch_pass(self, email):
         result = """ SELECT password FROM users_tb WHERE email = '{}' """.format(email)
         self.cur.execute(result)
