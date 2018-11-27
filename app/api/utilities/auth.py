@@ -26,6 +26,28 @@ class PasswordAuth():
             hashed_pass = db_return["password"]
             return hashed_pass
 
+class RegAuth():
+    """Checks if user already exists."""
+
+    def email_auth(self, email):
+        """Checks if email is already registered."""
+        sort_item = email
+        column = "email"
+        db_return = db.fetch_single(column, sort_item)
+        if db_return == None:
+            return True
+
+    def phone_auth(self, contact_phone):
+        """Checks if phone number is already registered."""
+        sort_item = contact_phone
+        print(sort_item)
+        column = "contact_phone"
+        db_return = db.fetch_number(sort_item)
+        print(db_return)
+        if db_return == None:
+            return True
+
 
 # Create instance of PasswordAuth class
 password_check = PasswordAuth()
+reg_auth = RegAuth()

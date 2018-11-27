@@ -3,7 +3,8 @@ import json
 from flask_restful import Resource, Api
 from flask_restful.reqparse import RequestParser
 from app.api.v2.models import ParcelOrder, UserModel
-from app.api.utilities.validators import email_validator
+from app.api.utilities.validators import email_validator, username_checker, space_checker
+from app.api.utilities.auth import reg_auth
 
 
 parcel = ParcelOrder()
@@ -36,12 +37,25 @@ class CreateUser(Resource):
 		email = user_data.get("email")
 		password = user_data.get("password")
 		contact_phone = user_data.get("contact_phone")
+
 		if email_validator(email):
-			new_user = mteja.new_user(username, email, password, contact_phone)
-			new_user = json.loads(new_user)
-			return make_response(jsonify(
-				{"message": "User registration successful",
-				 "data": new_user}), 201)
+			if username_checker(username):
+				if reg_auth.email_auth(email):
+					if reg_auth.phone_auth(contact_phone):
+						new_user = mteja.new_user(username, email, password, contact_phone)
+						new_user = json.loads(new_user)
+						return make_response(jsonify(
+						{"message": "User registration successful",
+						 "data": new_user}), 201)
+					else:
+						return make_response(jsonify(
+							{"message": "Phone number is registered to another user"}), 400)
+				else:
+					return make_response(jsonify(
+					{"message": "User already exists"}), 400)
+			else:
+				return make_response(jsonify(
+					{"message": "Username cannot be blank spaces or have special characters"}), 400)
 		else:
 			return make_response(jsonify({"message": "Please enter a valid email"}), 400)
 
@@ -107,11 +121,24 @@ class CreateParcels(Resource):
 		location = data['location']
 		destination = data['destination']
 		pickup_date = data['pickup_date']
-		new_order = parcel.new_parcel(client_name, user_id, recipient_name,
-									  package_desc, location, destination, pickup_date)
-		new_order = json.loads(new_order)
-		return make_response(jsonify({"message": "Parcel order created successfully",
-									  "data": new_order}), 201)
+
+		parcel_dict = {
+			"client_name": client_name,
+			"recipient_name": recipient_name,
+			"package_desc": package_desc,
+			"location": location,
+			"destination": destination,
+		}
+
+		if space_checker(parcel_dict):
+			new_order = parcel.new_parcel(client_name, user_id, recipient_name,
+										  package_desc, location, destination, pickup_date)
+			new_order = json.loads(new_order)
+			return make_response(jsonify({"message": "Parcel order created successfully",
+										  "data": new_order}), 201)
+		else:
+			return make_response(jsonify(
+				{"message": "Parcel details cannot be empty or have special characters"}), 400)
 
 
 class AllOrders(Resource):
