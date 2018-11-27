@@ -12,7 +12,7 @@ class UserModel(object):
     """Model for Users."""
 
     def __init__(self):
-        self.user_role = user_roles["user"]
+        self.user_role = user_roles["admin"]
 
     def new_user(self, username, email, password, contact_phone):
         """Method creates new user."""

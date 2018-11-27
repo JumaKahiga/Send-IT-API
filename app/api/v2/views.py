@@ -2,9 +2,10 @@ from flask import request, Blueprint, make_response, jsonify
 import json
 from flask_restful import Resource, Api
 from flask_restful.reqparse import RequestParser
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, fresh_jwt_required
 from app.api.v2.models import ParcelOrder, UserModel
 from app.api.utilities.validators import email_validator, username_checker, space_checker
-from app.api.utilities.auth import reg_auth
+from app.api.utilities.auth import reg_auth, admin_required, password_check
 
 
 parcel = ParcelOrder()
@@ -83,7 +84,12 @@ class UserLogin(Resource):
 			login_data = mteja.login_user(email, password)
 
 		if login_data == True:
-			return make_response(jsonify({"message": "Login successful"}), 200)
+			user_role = password_check.get_user_role(email)
+			tokens_dict = {
+				'access_token': create_access_token(identity={"email": email, "user_role": user_role}, fresh=True),
+				'refresh_token': create_refresh_token(identity=email)
+			}
+			return make_response(jsonify({"message": "Login successful", "tokens": tokens_dict}), 200)
 		else:
 			return make_response(jsonify({"message": "User not found. Please try api/v2/auth/signup"}), 406)
 
@@ -101,7 +107,7 @@ class CreateParcels(Resource):
 		self.parcel_parser.add_argument(
 			"client_name", type=str, required=True, help="Invalid username. Please try again")
 		self.parcel_parser.add_argument(
-			"recipient_name", type=str, required=True, help="Invalid username. Please try again")
+			"recipient_name", type=str, required=True, help="Invalid recipient name. Please try again")
 		self.parcel_parser.add_argument(
 			"package_desc", type=str, required=True, help="Please enter valid package details")
 		self.parcel_parser.add_argument(
@@ -111,8 +117,11 @@ class CreateParcels(Resource):
 		self.parcel_parser.add_argument(
 			"pickup_date", type=str, required=True, help="Please enter valid pickup date for the parcel")
 
+	@jwt_required
 	def post(self):
 		"""Creates new order based on input given"""
+		email = get_jwt_identity()
+
 		data = self.parcel_parser.parse_args()
 		client_name = data['client_name']
 		user_id = self.user_id + 1
@@ -144,19 +153,25 @@ class CreateParcels(Resource):
 class AllOrders(Resource):
 	"""Gets all orders"""
 
+	@admin_required
 	def get(self):
+		email = get_jwt_identity()
+
 		return json.loads(parcel.all_parcels())
 
 
 class SpecificOrder(Resource):
 	"""Gets a specific order"""
 
+	@jwt_required
 	def get(self, parcel_id):
+		email = get_jwt_identity()
+
 		try:
 			int(parcel_id)
 		except ValueError:
 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
-		finally:
+		else:
 			parcel_id = int(parcel_id)
 
 		single_order = json.loads(parcel.single_parcel(parcel_id))
@@ -170,7 +185,7 @@ class CancelOrder(Resource):
 			int(parcel_id)
 		except ValueError:
 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
-		finally:
+		else:
 			parcel_id = int(parcel_id)
 
 		updated_order = parcel.cancel_order(parcel_id)
@@ -181,6 +196,7 @@ class CancelOrder(Resource):
 class UserSpecificOrders(Resource):
 	"""Gets all orders for a single user"""
 
+	@jwt_required
 	def get(self, user_id):
 		try:
 			int(user_id)
@@ -196,12 +212,13 @@ class UserSpecificOrders(Resource):
 class UpdateOrderStatus(Resource):
 	"""Updating order status."""
 
+	@admin_required
 	def put(self, parcel_id):
 		try:
 			int(parcel_id)
 		except ValueError:
 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
-		finally:
+		else:
 			parcel_id = int(parcel_id)
 
 		updated_order = parcel.update_status(parcel_id)
@@ -216,12 +233,13 @@ class UpdateOrderLocation(Resource):
 		self.location_parser.add_argument(
 			"location", type=str, required=True, help="Invalid location details")
 
+	@admin_required
 	def put(self, parcel_id):
 		try:
 			int(parcel_id)
 		except ValueError:
 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
-		finally:
+		else:
 			parcel_id = int(parcel_id)
 
 		data = self.location_parser.parse_args()
@@ -240,12 +258,13 @@ class UpdateOrderDestination(Resource):
 		self.destination_parser.add_argument(
 			"destination", type=str, required=True, help="Invalid destination details")
 
+	@fresh_jwt_required
 	def put(self, parcel_id):
 		try:
 			int(parcel_id)
 		except ValueError:
 			return make_response(jsonify({"Error": "Enter valid parcel ID"}), 404)
-		finally:
+		else:
 			parcel_id = int(parcel_id)
 
 		data = self.destination_parser.parse_args()
