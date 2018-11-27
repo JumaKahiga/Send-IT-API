@@ -96,11 +96,11 @@ class DbConnections():
         result = self.cur.fetchone()
         return result
 
-    def fetch_pass(self, email):
-        result = """ SELECT password FROM users_tb WHERE email = '{}' """.format(email)
+    def fetch_pass(self, hashed_pass):
+        result = """ SELECT password FROM users_tb WHERE password = '{}' """.format(hashed_pass)
         self.cur.execute(result)
-        for password in self.cur.fetchall():
-            return password
+        result = self.cur.fetchone()
+        return result
 
     def update_details(self, table, column_name, column_value, sort_item, sort_value):
         """Updates table column values for a row matching a specific parameter"""

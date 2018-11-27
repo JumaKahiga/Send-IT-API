@@ -14,13 +14,10 @@ class PasswordAuth():
 
         return hashed_pass
 
-    def check_pass(self, email):
+    def check_pass(self, hashed_pass):
         """Checks if password input is correct."""
-        users_tb = "users_tb"
-        email = "email"
-        sort_item = email
-        db_return = db.fetch_specific(users_tb, email, sort_item)
-        if db_return == []:
+        db_return = db.fetch_pass(hashed_pass)
+        if db_return == None:
             return False
         else:
             hashed_pass = db_return["password"]
@@ -43,7 +40,6 @@ class RegAuth():
         print(sort_item)
         column = "contact_phone"
         db_return = db.fetch_number(sort_item)
-        print(db_return)
         if db_return == None:
             return True
 
