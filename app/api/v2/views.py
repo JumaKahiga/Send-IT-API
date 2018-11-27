@@ -3,7 +3,7 @@ import json
 from flask_restful import Resource, Api
 from flask_restful.reqparse import RequestParser
 from app.api.v2.models import ParcelOrder, UserModel
-from app.api.utilities.validators import email_validator, username_checker
+from app.api.utilities.validators import email_validator, username_checker, space_checker
 from app.api.utilities.auth import reg_auth
 
 
@@ -121,11 +121,24 @@ class CreateParcels(Resource):
 		location = data['location']
 		destination = data['destination']
 		pickup_date = data['pickup_date']
-		new_order = parcel.new_parcel(client_name, user_id, recipient_name,
-									  package_desc, location, destination, pickup_date)
-		new_order = json.loads(new_order)
-		return make_response(jsonify({"message": "Parcel order created successfully",
-									  "data": new_order}), 201)
+
+		parcel_dict = {
+			"client_name": client_name,
+			"recipient_name": recipient_name,
+			"package_desc": package_desc,
+			"location": location,
+			"destination": destination,
+		}
+
+		if space_checker(parcel_dict):
+			new_order = parcel.new_parcel(client_name, user_id, recipient_name,
+										  package_desc, location, destination, pickup_date)
+			new_order = json.loads(new_order)
+			return make_response(jsonify({"message": "Parcel order created successfully",
+										  "data": new_order}), 201)
+		else:
+			return make_response(jsonify(
+				{"message": "Parcel details cannot be empty or have special characters"}), 400)
 
 
 class AllOrders(Resource):
