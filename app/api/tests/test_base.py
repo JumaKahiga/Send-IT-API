@@ -1,4 +1,5 @@
 import unittest
+import json
 import os
 from flask_jwt_extended import create_access_token, create_refresh_token
 from app import create_app
@@ -47,11 +48,6 @@ user_token_login = {
 dummy_login = {"email": "maureen@yah.com",
                "password": "pass1234"}
 
-# tokens_dict = {
-#     'access_token': create_access_token(identity={"email": dummy_login["email"], "user_role": user_dummy_data["role"]}, fresh=True),
-#     'refresh_token': create_refresh_token(identity={"email": dummy_login["email"], "user_role": user_dummy_data["role"]}),
-#     }
-
 
 user_invalid_data = {
     "user_id": 5,
@@ -80,7 +76,7 @@ class BaseTest(unittest.TestCase):
         self.app.app_context().push()
         self.client = self.app.test_client(self)
         self.app.testing = True
-        self.parcel_id = str(parcel_dummy_data.get("parcel_id"))
+        self.parcel_id = "1"
         self.sample_parcel = parcel_dummy_data
         self.status2 = "Delivered"
         self.location2 = location_sample
@@ -94,16 +90,21 @@ class BaseTest(unittest.TestCase):
         # self.access_token = tokens_dict["access_token"]
         self.user_id = str(user_dummy_data.get("user_id"))
 
-    def gen_user_token(self):
+    def gen_token(self):
         """Generates token to be used during testing"""
         self.client.post('/api/v2/auth/signup', data=json.dumps(self.user_data),
             content_type='application/json')
         respo = self.client.post('/api/v2/auth/login', data=json.dumps(self.user_login),
             content_type='application/json')
-        access_token = json.loads(respo.get_data(as_text=True))['access_token']
+        access_token = json.loads(respo.data.decode())["tokens"]["access_token"]
+        print(access_token)
         log_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return log_header
 
     def tearDown(self):
+        # db.drop_tables()
         pass
 
+
+if __name__ == '__main__':
+    unittest.main()

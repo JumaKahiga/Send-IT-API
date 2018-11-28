@@ -21,8 +21,8 @@ class TestUserSuccess(BaseTest):
 		respo = self.client.post(
 			'api/v2/auth/login', data=json.dumps(self.sample_login), content_type='application/json')
 		result = json.loads(respo.data.decode())
-		self.assertEqual(respo.status_code, 406)
-		self.assertEqual(result["message"], "User not found. Please try api/v2/auth/signup")
+		self.assertEqual(respo.status_code, 200)
+		self.assertEqual(result["message"], "Login successful")
 
 
 class TestUserFail(BaseTest):
