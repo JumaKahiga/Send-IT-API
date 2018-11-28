@@ -31,21 +31,21 @@ user_dummy_data = {
 }
 
 user_token_data = {
-    "user_id": 2,
+    "user_id": 1,
     "username": "Marty Leroy",
-    "email": "leroy@yah.com",
+    "email": "leroy2@yah.com",
     "password": "pass1234",
-    "contact_phone": "0712395679",
+    "contact_phone": "0712395609",
     "role": 2
 }
 
 user_token_login = {
-    "email": "leroy@yah.com",
+    "email": "leroy2@yah.com",
     "password": "pass1234",
 }
 
 
-dummy_login = {"email": "maureen@yah.com",
+dummy_login = {"email": "leroy2@yah.com",
                "password": "pass1234"}
 
 
@@ -102,8 +102,11 @@ class BaseTest(unittest.TestCase):
         return log_header
 
     def tearDown(self):
-        # db.drop_tables()
-        pass
+        users_tb = "users_tb"
+        sort_item = "email"
+        sort_value = self.user_data["email"]
+
+        #db.delete_content(users_tb, sort_item, sort_value)
 
 
 if __name__ == '__main__':

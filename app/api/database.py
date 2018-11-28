@@ -115,6 +115,13 @@ class DbConnections():
         self.connect.commit()
         return result
 
+    def delete_content(self, table, sort_item, sort_value):
+        """Deletes rows in table that match specific sort_item."""
+        result = """ DELETE FROM {} WHERE {} = '{}' """.format(table, sort_item, sort_value)
+        self.cur.execute(result)
+        self.connect.commit()
+        #return "Table content cleared"
+
 
     def execute(self, query):
         try:
