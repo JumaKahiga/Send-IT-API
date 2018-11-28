@@ -104,9 +104,9 @@ class BaseTest(unittest.TestCase):
     def tearDown(self):
         users_tb = "users_tb"
         sort_item = "email"
-        sort_value = self.user_data["email"]
+        sort_value = self.sample_user["email"]
 
-        #db.delete_content(users_tb, sort_item, sort_value)
+        db.delete_content(users_tb, sort_item, sort_value)
 
 
 if __name__ == '__main__':
