@@ -1,7 +1,11 @@
 """Contain user registration, login, and any other authentication function."""
 import hashlib
 import json
+from functools import wraps
+from flask import jsonify
+from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 from app.api.database import db
+
 
 
 class PasswordAuth():
@@ -14,17 +18,23 @@ class PasswordAuth():
 
         return hashed_pass
 
-    def check_pass(self, email):
+    def check_pass(self, hashed_pass):
         """Checks if password input is correct."""
-        users_tb = "users_tb"
-        email = "email"
-        sort_item = email
-        db_return = db.fetch_specific(users_tb, email, sort_item)
-        if db_return == []:
+        db_return = db.fetch_pass(hashed_pass)
+        if db_return == None:
             return False
         else:
             hashed_pass = db_return["password"]
             return hashed_pass
+
+    def get_user_role(self, email):
+        """Gets user role during login."""
+        db_return = db.fetch_role(email)
+        if db_return == None:
+            return False
+        else:
+            user_role = int(db_return[0]["role"])
+            return user_role
 
 class RegAuth():
     """Checks if user already exists."""
@@ -40,12 +50,26 @@ class RegAuth():
     def phone_auth(self, contact_phone):
         """Checks if phone number is already registered."""
         sort_item = contact_phone
-        print(sort_item)
         column = "contact_phone"
         db_return = db.fetch_number(sort_item)
-        print(db_return)
         if db_return == None:
             return True
+
+
+def admin_required(fn):
+    """Limits access of routes to admin."""
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        verify_jwt_in_request()
+        user_dict = get_jwt_identity()
+        email = user_dict["email"]
+        user_role = password_check.get_user_role(email)
+        print(user_role)
+        if user_role != 1:
+            return jsonify({"message": "Admins only"})
+        else:
+            return fn(*args, **kwargs)
+    return wrapper
 
 
 # Create instance of PasswordAuth class
