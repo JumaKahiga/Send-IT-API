@@ -201,7 +201,7 @@ class UserSpecificOrders(Resource):
 		try:
 			int(user_id)
 		except ValueError:
-			return make_response(jsonify({"Message": "Invalid user ID"}), 409)
+			return make_response(jsonify({"Error": "Invalid user ID"}), 404)
 		else:
 			user_id = int(user_id)
 

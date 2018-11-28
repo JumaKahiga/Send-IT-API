@@ -54,6 +54,31 @@ class TestParcel(BaseTest):
 		self.assertEqual(respo.status_code, 200)
 
 
+class TestFailParcel(BaseTest):
+	"""Test wrong inputs in the ParcelOrder Model."""
+	def test_invalid_username(self):
+		"""Tests when username has invalid characters."""
+		respo= self.client.post('/api/v2/parcel',data = json.dumps(self.invalid_parcel), content_type='application/json', headers=self.gen_token())
+		result= json.loads(respo.data.decode())
+		self.assertEqual(respo.status_code,400)
+		self.assertEqual(result["message"], "Parcel details cannot be empty or have special characters")
+
+	def test_invalid_parcel_id(self):
+		"""Tests when parcel ID input is not an integer."""
+		parcel_id= self.invalid_parcel_id
+		respo= self.client.get('/api/v2/parcels/' + parcel_id, headers=self.gen_token())
+		result= json.loads(respo.data.decode())
+		self.assertEqual(respo.status_code, 404)
+		self.assertEqual(result["Error"], "Enter valid parcel ID")
+
+	def test_invalid_user_id(self):
+		"""Tests invalid user ID when getting all orders for a specific user"""
+		user_id = self.invalid_user_id
+		respo= self.client.get('api/v2/users/' + user_id + '/parcels', headers=self.gen_token())
+		result= json.loads(respo.data.decode())
+		self.assertEqual(respo.status_code, 404)
+		self.assertEqual(result["Error"], "Invalid user ID")
+
 
 if __name__ == "__main__":
 	unittest.main()
