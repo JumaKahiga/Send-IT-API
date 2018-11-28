@@ -18,6 +18,8 @@ class TestUserSuccess(BaseTest):
 
 	def test_login_user(self):
 		"""Tests successful log in."""
+		self.client.post('/api/v2/auth/signup', data=json.dumps(self.user_data),
+            content_type='application/json')
 		respo = self.client.post(
 			'api/v2/auth/login', data=json.dumps(self.sample_login), content_type='application/json')
 		result = json.loads(respo.data.decode())

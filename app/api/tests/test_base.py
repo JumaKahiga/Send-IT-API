@@ -31,7 +31,7 @@ user_dummy_data = {
 }
 
 user_token_data = {
-    "user_id": 1,
+    "user_id": 2,
     "username": "Marty Leroy",
     "email": "leroy2@yah.com",
     "password": "pass1234",
