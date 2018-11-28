@@ -39,9 +39,7 @@ class UserModel(object):
     def login_user(self, email, password):
         """Method for login user"""
         hashed_pass = password_check.pass_hash_salt(password, email)
-        print(hashed_pass)
         db_chk = password_check.check_pass(hashed_pass)
-        print(db_chk)
 
         if db_chk == "False":
             unregistered_user = "User not available"

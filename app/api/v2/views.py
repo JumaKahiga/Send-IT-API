@@ -4,18 +4,62 @@ from flask_restful import Resource, Api
 from flask_restful.reqparse import RequestParser
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, fresh_jwt_required
 from app.api.v2.models import ParcelOrder, UserModel
+from app.api.v2.admin_models import AdminModel
 from app.api.utilities.validators import email_validator, username_checker, space_checker
 from app.api.utilities.auth import reg_auth, admin_required, password_check
 
 
 parcel = ParcelOrder()
 mteja = UserModel()
+admin_mteja = AdminModel()
 
 # User roles
 admin = 1
 user = 2
 
 """ User Models."""
+
+class CreateAdmin(Resource):
+	"""Class for creating admin."""
+
+	def __init__(self):
+		self.user_parser = RequestParser()
+		self.user_parser.add_argument(
+			"username", type=str, required=True, help="Username can only consist of letters")
+		self.user_parser.add_argument(
+			"email", type=str, required=True, help="Invalid email")
+		self.user_parser.add_argument(
+			"password", required=True, help="Password cannot be empty")
+		self.user_parser.add_argument(
+			"contact_phone", type=int, required=True, help="Phone number can only be an integer")
+
+	def post(self):
+		user_data = self.user_parser.parse_args()
+		username = user_data.get("username")
+		email = user_data.get("email")
+		password = user_data.get("password")
+		contact_phone = user_data.get("contact_phone")
+
+		if email_validator(email):
+			if username_checker(username):
+				if reg_auth.email_auth(email):
+					if reg_auth.phone_auth(contact_phone):
+						new_user = admin_mteja.new_user(username, email, password, contact_phone)
+						new_user = json.loads(new_user)
+						return make_response(jsonify(
+						{"message": "Admin registration successful",
+						 "data": new_user}), 201)
+					else:
+						return make_response(jsonify(
+							{"message": "Phone number is registered to another admin"}), 400)
+				else:
+					return make_response(jsonify(
+					{"message": "Admin already exists"}), 400)
+			else:
+				return make_response(jsonify(
+					{"message": "Username cannot be blank spaces or have special characters"}), 400)
+		else:
+			return make_response(jsonify({"message": "Please enter a valid email"}), 400)
 
 
 class CreateUser(Resource):
@@ -296,6 +340,7 @@ api.add_resource(UpdateOrderDestination,
 
 # Add user resources
 api.add_resource(CreateUser, "/auth/signup", strict_slashes=False)
+api.add_resource(CreateAdmin, "/auth/admin/signup", strict_slashes=False)
 api.add_resource(UserLogin, '/auth/login', strict_slashes=False)
 api.add_resource(UserSpecificOrders,
 				 '/users/<user_id>/parcels', strict_slashes=False)

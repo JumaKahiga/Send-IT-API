@@ -64,7 +64,6 @@ def admin_required(fn):
         user_dict = get_jwt_identity()
         email = user_dict["email"]
         user_role = password_check.get_user_role(email)
-        print(user_role)
         if user_role != 1:
             return jsonify({"message": "Admins only"})
         else:

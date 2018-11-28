@@ -33,17 +33,22 @@ class BaseTest(unittest.TestCase):
         self.sample_user = user_dummy_data
         self.user_data = user_token_data
         self.user_login = user_token_login
+        self.sample_admin = admin_dummy_data
+        self.admin_data = admin_token_data
+        self.admin_login = admin_token_login
         self.invalid_user1 = user_invalid_data1
         self.invalid_user2 = user_invalid_data2
         self.invalid_user3 = user_invalid_data3
         self.invalid_user4 = user_invalid_data4
+        self.invalid_user5 = user_invalid_data5
         self.bad_login = bad_login
+        self.sample_login = dummy_login
         self.sample_login = dummy_login
         self.user_id = str(user_dummy_data.get("user_id"))
         self.invalid_user_id = "@"
 
     def gen_token(self):
-        """Generates token to be used during testing"""
+        """Generates user token to be used during testing"""
         self.client.post('/api/v2/auth/signup', data=json.dumps(self.user_data),
             content_type='application/json')
         respo = self.client.post('/api/v2/auth/login', data=json.dumps(self.user_login),
@@ -52,13 +57,35 @@ class BaseTest(unittest.TestCase):
         log_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return log_header
 
+    def gen_admin_token(self):
+        """Generates admin token to be used during testing"""
+        self.client.post('/api/v2/auth/admin/signup', data=json.dumps(self.admin_data),
+            content_type='application/json')
+        respo = self.client.post('/api/v2/auth/login', data=json.dumps(self.admin_login),
+            content_type='application/json')
+        access_token = json.loads(respo.data.decode())["tokens"]["access_token"]
+        log_header = {'Authorization': 'Bearer {}'.format(access_token)}
+        return log_header
+
     def tearDown(self):
         """Removes test data from tables."""
-        users_tb = "users_tb"
-        sort_item = "email"
-        sort_value = self.sample_user["email"]
+        users_tb1 = "users_tb"
+        sort_item1 = "email"
+        sort_value1 = self.sample_user["email"]
 
-        db.delete_content(users_tb, sort_item, sort_value)
+        db.delete_content(users_tb1, sort_item1, sort_value1)
+
+        users_tb2 = "users_tb"
+        sort_item2 = "email"
+        sort_value2 = self.sample_admin["email"]
+
+        db.delete_content(users_tb2, sort_item2, sort_value2)
+
+        users_tb3 = "users_tb"
+        sort_item3 = "email"
+        sort_value3 = self.user_data["email"]
+
+        db.delete_content(users_tb3, sort_item3, sort_value3)
 
 
 if __name__ == '__main__':

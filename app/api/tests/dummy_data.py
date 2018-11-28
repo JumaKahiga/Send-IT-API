@@ -15,13 +15,29 @@ parcel_invalid_data = {"client_name": "John 80e",
                      "pickup_date": "12 November 2018"}
 
 
+admin_dummy_data = {
+    "user_id": 1,
+    "username": "Juma Kahiga",
+    "email": "jumak@yah.com",
+    "password": "pass1234",
+    "contact_phone": "0712345689",
+}
+
 user_dummy_data = {
     "user_id": 1,
-    "username": "Maureen Dempsy",
+    "username": "Maureen Frank",
     "email": "maureen@yah.com",
     "password": "pass1234",
-    "contact_phone": "0712345679",
-    "role": 1
+    "contact_phone": "0710000000",
+}
+
+
+admin_token_data = {
+    "user_id": 4,
+    "username": "John Legend",
+    "email": "legend@yah.com",
+    "password": "pass1234",
+    "contact_phone": "070000000",
 }
 
 user_token_data = {
@@ -30,8 +46,8 @@ user_token_data = {
     "email": "leroy2@yah.com",
     "password": "pass1234",
     "contact_phone": "0712395609",
-    "role": 2
 }
+
 
 user_token_login = {
     "email": "leroy2@yah.com",
@@ -43,6 +59,9 @@ dummy_login = {"email": "leroy2@yah.com",
                "password": "pass1234"}
 
 
+admin_token_login = {"email": "legend@yah.com",
+               "password": "pass1234"}
+
 user_invalid_data1 = {
     "user_id": 5,
     "username": "Thomas Smith",
@@ -52,6 +71,7 @@ user_invalid_data1 = {
     "role": 1
 }
 
+
 user_invalid_data2 = {
     "user_id": 5,
     "username": "Thomas 5m1th",
@@ -60,6 +80,7 @@ user_invalid_data2 = {
     "contact_phone": "0712345678",
     "role": 1
 }
+
 
 user_invalid_data3 = {
     "user_id": 5,
@@ -71,11 +92,19 @@ user_invalid_data3 = {
 
 user_invalid_data4 = {
     "user_id": 1,
-    "username": "Maureen Demp",
+    "username": "Jane Demp",
     "email": "maury@yah.com",
     "password": "pass1234",
-    "contact_phone": "0712345679",
+    "contact_phone": "0710000000",
     "role": 1
+}
+
+user_invalid_data5 = {
+    "user_id": 1,
+    "username": "Jane Demp",
+    "email": "maury@yah.com",
+    "password": "pass1234",
+    "contact_phone": "0712345689",
 }
 
 bad_login = {"email": "sam", "password": "kjl"}
