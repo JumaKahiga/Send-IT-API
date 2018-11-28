@@ -29,14 +29,28 @@ user_dummy_data = {
     "role": 1
 }
 
+user_token_data = {
+    "user_id": 2,
+    "username": "Marty Leroy",
+    "email": "leroy@yah.com",
+    "password": "pass1234",
+    "contact_phone": "0712395679",
+    "role": 2
+}
+
+user_token_login = {
+    "email": "leroy@yah.com",
+    "password": "pass1234",
+}
+
 
 dummy_login = {"email": "maureen@yah.com",
                "password": "pass1234"}
 
-tokens_dict = {
-    'access_token': create_access_token(identity={"email": dummy_login["email"], "user_role": user_dummy_data["role"]}, fresh=True),
-    'refresh_token': create_refresh_token(identity={"email": dummy_login["email"], "user_role": user_dummy_data["role"]}),
-    }
+# tokens_dict = {
+#     'access_token': create_access_token(identity={"email": dummy_login["email"], "user_role": user_dummy_data["role"]}, fresh=True),
+#     'refresh_token': create_refresh_token(identity={"email": dummy_login["email"], "user_role": user_dummy_data["role"]}),
+#     }
 
 
 user_invalid_data = {
@@ -50,7 +64,6 @@ user_invalid_data = {
 
 bad_login = {"email": "sam", "password": "kjl"}
 
-app.app_context().push()
 
 
 location_sample = {"location": "Oyugis"}
@@ -64,7 +77,7 @@ class BaseTest(unittest.TestCase):
         self.db = db
         os.environ["FLASK_ENV"] = "testing"
         self.app = create_app(config="testing")
-        app.app_context().push()
+        self.app.app_context().push()
         self.client = self.app.test_client(self)
         self.app.testing = True
         self.parcel_id = str(parcel_dummy_data.get("parcel_id"))
@@ -73,11 +86,24 @@ class BaseTest(unittest.TestCase):
         self.location2 = location_sample
         self.destination2 = destination_sample
         self.sample_user = user_dummy_data
+        self.user_data = user_token_data
+        self.user_login = user_token_login
         self.invalid_user = user_invalid_data
         self.bad_login = bad_login
         self.sample_login = dummy_login
-        self.access_token = tokens_dict["access_token"]
+        # self.access_token = tokens_dict["access_token"]
         self.user_id = str(user_dummy_data.get("user_id"))
+
+    def gen_user_token(self):
+        """Generates token to be used during testing"""
+        self.client.post('/api/v2/auth/signup', data=json.dumps(self.user_data),
+            content_type='application/json')
+        respo = self.client.post('/api/v2/auth/login', data=json.dumps(self.user_login),
+            content_type='application/json')
+        access_token = json.loads(respo.get_data(as_text=True))['access_token']
+        log_header = {'Authorization': 'Bearer {}'.format(access_token)}
+        return log_header
 
     def tearDown(self):
         pass
+

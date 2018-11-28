@@ -9,7 +9,7 @@ class TestParcel(BaseTest):
 	"""Class for unit tests for the ParcelOrder model."""
 	def test_new_parcel(self):
 		"""Tests creation of new parcel"""
-		respo= self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel), content_type='application/json', headers=dict(Authorization="Bearer" + self.access_token))
+		respo= self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel), content_type='application/json', headers=self.gen_user_token())
 		result= json.loads(respo.data.decode())
 		self.assertEqual(respo.status_code,201)
 		self.assertEqual(result["message"], "Parcel order created successfully")
@@ -23,7 +23,7 @@ class TestParcel(BaseTest):
 	def test_single_parcel(self):
 		"""Tests fetching a single order"""
 		parcel_id= self.parcel_id
-		respo= self.client.get('/api/v2/parcels/' + parcel_id)
+		respo= self.client.get('/api/v2/parcels/' + parcel_id, headers=self.gen_user_token())
 		self.assertEqual(respo.status_code, 200)
 
 	def test_update_status(self):
@@ -42,7 +42,7 @@ class TestParcel(BaseTest):
 
 	def test_update_destination(self):
 		"""Tests updating order destination"""
-		respo = self.client.put('/api/v2/parcels/' + self.parcel_id + '/destination', data =json.dumps(self.destination2), content_type='application/json')
+		respo = self.client.put('/api/v2/parcels/' + self.parcel_id + '/destination', data =json.dumps(self.destination2), content_type='application/json', headers=self.gen_user_token())
 		result = json.loads(respo.data.decode())
 		self.assertEqual(result["message"], "Parcel order destination updated successfully")
 		self.assertEqual(respo.status_code, 200)
