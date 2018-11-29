@@ -12,7 +12,7 @@ class UserModel(object):
     """Model for Users."""
 
     def __init__(self):
-        self.user_role = user_roles["admin"]
+        self.user_role = user_roles["user"]
 
     def new_user(self, username, email, password, contact_phone):
         """Method creates new user."""
@@ -39,9 +39,7 @@ class UserModel(object):
     def login_user(self, email, password):
         """Method for login user"""
         hashed_pass = password_check.pass_hash_salt(password, email)
-        print(hashed_pass)
         db_chk = password_check.check_pass(hashed_pass)
-        print(db_chk)
 
         if db_chk == "False":
             unregistered_user = "User not available"
