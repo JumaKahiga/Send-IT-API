@@ -46,7 +46,9 @@ class TestAdminRoutes(BaseTest):
 
 	def test_update_location(self):
 		"""Tests updating order location"""
-		respo = self.client.put('/api/v2/parcels/' + self.parcel_id + '/presentLocation',
+		self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel),
+			content_type='application/json', headers=self.gen_admin_token())
+		respo = self.client.put('/api/v2/parcels/' + self.get_parcel_id() + '/presentLocation',
 			data =json.dumps(self.location2), content_type='application/json', headers=self.gen_admin_token())
 		result = json.loads(respo.data.decode())
 		self.assertEqual(result["message"], "Parcel order location updated successfully")
@@ -58,7 +60,18 @@ class TestFailAdminRoute(BaseTest):
 
 	def test_update_location(self):
 		"""Tests updating order location"""
-		respo = self.client.put('/api/v2/parcels/' + self.parcel_id + '/presentLocation',
+		self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel),
+			content_type='application/json', headers=self.gen_admin_token())
+		respo = self.client.put('/api/v2/parcels/' + self.get_parcel_id() + '/presentLocation',
+			data =json.dumps(self.location2), content_type='application/json', headers=self.gen_token())
+		result = json.loads(respo.data.decode())
+		self.assertEqual(result["message"], "Admins only")
+
+	def test_update_status(self):
+		"""Tests updating order location"""
+		self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel),
+			content_type='application/json', headers=self.gen_admin_token())
+		respo = self.client.put('/api/v2/parcels/' + self.get_parcel_id() + '/status',
 			data =json.dumps(self.location2), content_type='application/json', headers=self.gen_token())
 		result = json.loads(respo.data.decode())
 		self.assertEqual(result["message"], "Admins only")

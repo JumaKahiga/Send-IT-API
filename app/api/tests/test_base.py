@@ -27,7 +27,7 @@ class BaseTest(unittest.TestCase):
         self.invalid_parcel_id = "n"
         self.sample_parcel = parcel_dummy_data
         self.invalid_parcel = parcel_invalid_data
-        self.status2 = "Delivered"
+        self.status2 = status_sample
         self.location2 = location_sample
         self.destination2 = destination_sample
         self.sample_user = user_dummy_data
@@ -78,25 +78,29 @@ class BaseTest(unittest.TestCase):
 
     def tearDown(self):
         """Removes test data from tables."""
-        # users_tb1 = "users_tb"
-        # sort_item1 = "email"
-        # sort_value1 = self.sample_user["email"]
+        users_tb1 = "users_tb"
+        sort_item1 = "email"
+        sort_value1 = self.sample_user["email"]
 
-        # db.delete_content(users_tb1, sort_item1, sort_value1)
+        db.delete_content(users_tb1, sort_item1, sort_value1)
 
-        # users_tb2 = "users_tb"
-        # sort_item2 = "email"
-        # sort_value2 = self.sample_admin["email"]
+        users_tb2 = "users_tb"
+        sort_item2 = "email"
+        sort_value2 = self.sample_admin["email"]
 
-        # db.delete_content(users_tb2, sort_item2, sort_value2)
+        db.delete_content(users_tb2, sort_item2, sort_value2)
 
-        # users_tb3 = "users_tb"
-        # sort_item3 = "email"
-        # sort_value3 = self.user_data["email"]
+        users_tb3 = "users_tb"
+        sort_item3 = "email"
+        sort_value3 = self.user_data["email"]
 
-        # db.delete_content(users_tb3, sort_item3, sort_value3)
+        db.delete_content(users_tb3, sort_item3, sort_value3)
 
-        pass
+        parcels_tb = "parcels_tb"
+        sort_item4 = "package_desc"
+        sort_value4 = self.sample_parcel["package_desc"]
+
+        db.delete_content(parcels_tb, sort_item4, sort_value4)
 
 
 if __name__ == '__main__':
