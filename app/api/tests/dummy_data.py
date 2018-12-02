@@ -112,4 +112,5 @@ bad_login = {"email": "sam", "password": "kjl"}
 
 
 location_sample = {"location": "Oyugis"}
+status_sample = {"status": "On Transit"}
 destination_sample = {"destination": "Kangari"}

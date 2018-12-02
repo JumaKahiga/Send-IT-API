@@ -22,7 +22,8 @@ class TestParcel(BaseTest):
 
 	def test_update_destination(self):
 		"""Tests updating order destination"""
-		respo = self.client.put('/api/v2/parcels/' + self.parcel_id + '/destination', data =json.dumps(self.destination2), content_type='application/json', headers=self.gen_token())
+		self.client.post('/api/v2/parcel',data = json.dumps(self.sample_parcel), content_type='application/json', headers=self.gen_token())
+		respo = self.client.put('/api/v2/parcels/' + self.get_parcel_id() + '/destination', data =json.dumps(self.destination2), content_type='application/json', headers=self.gen_token())
 		result = json.loads(respo.data.decode())
 		self.assertEqual(result["message"], "Parcel order destination updated successfully")
 		self.assertEqual(respo.status_code, 200)

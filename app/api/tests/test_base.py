@@ -27,7 +27,7 @@ class BaseTest(unittest.TestCase):
         self.invalid_parcel_id = "n"
         self.sample_parcel = parcel_dummy_data
         self.invalid_parcel = parcel_invalid_data
-        self.status2 = "Delivered"
+        self.status2 = status_sample
         self.location2 = location_sample
         self.destination2 = destination_sample
         self.sample_user = user_dummy_data
@@ -67,6 +67,15 @@ class BaseTest(unittest.TestCase):
         log_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return log_header
 
+    def get_parcel_id(self):
+        """Gets parcel_id of created dummy parcel"""
+        table = "parcels_tb"
+        column = "package_desc"
+        sort_item = self.sample_parcel["package_desc"]
+        parcel_data = db.fetch_specific(table, column, sort_item)
+        parcel_id = str(parcel_data[0]["parcel_id"])
+        return parcel_id
+
     def tearDown(self):
         """Removes test data from tables."""
         users_tb1 = "users_tb"
@@ -86,6 +95,12 @@ class BaseTest(unittest.TestCase):
         sort_value3 = self.user_data["email"]
 
         db.delete_content(users_tb3, sort_item3, sort_value3)
+
+        parcels_tb = "parcels_tb"
+        sort_item4 = "package_desc"
+        sort_value4 = self.sample_parcel["package_desc"]
+
+        db.delete_content(parcels_tb, sort_item4, sort_value4)
 
 
 if __name__ == '__main__':

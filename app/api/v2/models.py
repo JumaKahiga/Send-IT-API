@@ -69,6 +69,13 @@ class ParcelOrder():
     def __init__(self):
         self.parcel_status = order_status["pending"]
 
+    def get_user_id(self, email):
+        """Gets user_id of current user to be recorded with a new order"""
+        column = "user_id"
+        sort_item = email
+        db_chk = db.fetch_single(column, sort_item)
+        return db_chk["user_id"]
+
     def new_parcel(self, client_name, user_id, recipient_name,
                    package_desc, location, destination, pickup_date):
         new_order_data = {
@@ -109,18 +116,24 @@ class ParcelOrder():
         single_order = json.dumps(single_order, default=str)
         return single_order
 
-    def update_status(self, parcel_id):
+    def update_status(self, parcel_id, status):
         """Updates status for order with the specified parcel_id"""
         parcels_tb = "parcels_tb"
         column_name = "status"
-        column_value = order_status["delivered"]
+        column_value = status
         sort_item = "parcel_id"
         sort_value = parcel_id
 
-        db.update_details(parcels_tb, column_name,
-                          column_value, sort_item, sort_value)
-        show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
-        return show_order
+        db_chk = db.fetch_specific(parcels_tb, sort_item, sort_value)
+        if db_chk == []:
+            return None
+        elif db_chk[0]["status"] != status:
+            db.update_details(parcels_tb, column_name,
+                  column_value, sort_item, sort_value)
+            show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
+            return show_order
+        else:
+            return False
 
     def update_location(self, parcel_id, location):
         """Updates location for order with the specified parcel_id"""
@@ -130,10 +143,16 @@ class ParcelOrder():
         sort_item = "parcel_id"
         sort_value = parcel_id
 
-        db.update_details(parcels_tb, column_name,
-                          column_value, sort_item, sort_value)
-        show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
-        return show_order
+        db_chk = db.fetch_specific(parcels_tb, sort_item, sort_value)
+        if db_chk == []:
+            return None
+        elif db_chk[0]["location"] != location:
+            db.update_details(parcels_tb, column_name,
+                  column_value, sort_item, sort_value)
+            show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
+            return show_order
+        else:
+            return False
 
     def update_destination(self, parcel_id, destination):
         """Updates destination for order with the specified parcel_id"""
@@ -143,10 +162,16 @@ class ParcelOrder():
         sort_item = "parcel_id"
         sort_value = parcel_id
 
-        db.update_details(parcels_tb, column_name,
-                          column_value, sort_item, sort_value)
-        show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
-        return show_order
+        db_chk = db.fetch_specific(parcels_tb, sort_item, sort_value)
+        if db_chk == []:
+            return None
+        elif db_chk[0]["destination"] != destination:
+            db.update_details(parcels_tb, column_name,
+                  column_value, sort_item, sort_value)
+            show_order = db.fetch_specific(parcels_tb, sort_item, sort_value)
+            return show_order
+        else:
+            return False
 
     def user_orders(self, user_id):
         """Fetches orders for a specific user"""
