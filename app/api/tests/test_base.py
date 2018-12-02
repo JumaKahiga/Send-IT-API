@@ -67,25 +67,36 @@ class BaseTest(unittest.TestCase):
         log_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return log_header
 
+    def get_parcel_id(self):
+        """Gets parcel_id of created dummy parcel"""
+        table = "parcels_tb"
+        column = "package_desc"
+        sort_item = self.sample_parcel["package_desc"]
+        parcel_data = db.fetch_specific(table, column, sort_item)
+        parcel_id = str(parcel_data[0]["parcel_id"])
+        return parcel_id
+
     def tearDown(self):
         """Removes test data from tables."""
-        users_tb1 = "users_tb"
-        sort_item1 = "email"
-        sort_value1 = self.sample_user["email"]
+        # users_tb1 = "users_tb"
+        # sort_item1 = "email"
+        # sort_value1 = self.sample_user["email"]
 
-        db.delete_content(users_tb1, sort_item1, sort_value1)
+        # db.delete_content(users_tb1, sort_item1, sort_value1)
 
-        users_tb2 = "users_tb"
-        sort_item2 = "email"
-        sort_value2 = self.sample_admin["email"]
+        # users_tb2 = "users_tb"
+        # sort_item2 = "email"
+        # sort_value2 = self.sample_admin["email"]
 
-        db.delete_content(users_tb2, sort_item2, sort_value2)
+        # db.delete_content(users_tb2, sort_item2, sort_value2)
 
-        users_tb3 = "users_tb"
-        sort_item3 = "email"
-        sort_value3 = self.user_data["email"]
+        # users_tb3 = "users_tb"
+        # sort_item3 = "email"
+        # sort_value3 = self.user_data["email"]
 
-        db.delete_content(users_tb3, sort_item3, sort_value3)
+        # db.delete_content(users_tb3, sort_item3, sort_value3)
+
+        pass
 
 
 if __name__ == '__main__':

@@ -166,9 +166,10 @@ class CreateParcels(Resource):
 		"""Creates new order based on input given"""
 		email = get_jwt_identity()
 
+		user_id = parcel.get_user_id(email["email"])
+
 		data = self.parcel_parser.parse_args()
 		client_name = data['client_name']
-		user_id = self.user_id + 1
 		recipient_name = data['recipient_name']
 		package_desc = data['package_desc']
 		location = data['location']
@@ -256,6 +257,11 @@ class UserSpecificOrders(Resource):
 class UpdateOrderStatus(Resource):
 	"""Updating order status."""
 
+	def __init__(self):
+		self.status_parser = RequestParser()
+		self.status_parser.add_argument(
+			"status", type=str, required=True, help="Invalid status")
+
 	@admin_required
 	def put(self, parcel_id):
 		try:
@@ -265,8 +271,19 @@ class UpdateOrderStatus(Resource):
 		else:
 			parcel_id = int(parcel_id)
 
-		updated_order = parcel.update_status(parcel_id)
-		return make_response(jsonify({"message": "Parcel order status updated successfully"}), 200)
+		data = self.status_parser.parse_args()
+		status = data['status']
+		parcel_id = parcel_id
+
+		updated_order = parcel.update_status(parcel_id, status)
+
+		if updated_order == None:
+			return make_response(jsonify({"message": "Parcel order not found"}), 404)
+		elif updated_order == False:
+			return make_response(jsonify({"message": "Status already updated to " + status}), 400)
+		else:
+			return make_response(jsonify({"message": "Parcel order status updated successfully",
+				"Parcel": updated_order[0]}), 200)
 
 
 class UpdateOrderLocation(Resource):
@@ -291,7 +308,14 @@ class UpdateOrderLocation(Resource):
 		parcel_id = parcel_id
 
 		updated_order = parcel.update_location(parcel_id, location)
-		return make_response(jsonify({"message": "Parcel order location updated successfully"}), 200)
+
+		if updated_order == None:
+			return make_response(jsonify({"message": "Parcel order not found"}), 404)
+		elif updated_order == False:
+			return make_response(jsonify({"message": "Location already updated to " + location}), 400)
+		else:
+			return make_response(jsonify({"message": "Parcel order location updated successfully",
+				"Parcel": updated_order[0]}), 200)
 
 
 class UpdateOrderDestination(Resource):
@@ -316,7 +340,14 @@ class UpdateOrderDestination(Resource):
 		parcel_id = parcel_id
 
 		updated_order = parcel.update_destination(parcel_id, destination)
-		return make_response(jsonify({"message": "Parcel order destination updated successfully"}), 200)
+
+		if updated_order == None:
+			return make_response(jsonify({"message": "Parcel order not found"}), 404)
+		elif updated_order == False:
+			return make_response(jsonify({"message": "Destination already updated to " + destination}), 400)
+		else:
+			return make_response(jsonify({"message": "Parcel order destination updated successfully",
+				"Parcel": updated_order[0]}), 200)
 
 v2 = Blueprint('v2', __name__, url_prefix='/api/v2')
 
