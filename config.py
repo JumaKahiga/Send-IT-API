@@ -19,7 +19,7 @@ class DevelopmentConfig(MainConfig):
 
 class ProductionConfig(MainConfig):
 	"""Production configuration"""
-	DB_URL = os.getenv('DB_URL')
+	DB_URL = "postgres://lcymvirjcnsqmd:f287c244235d44517383dbb35ac2a0ee187b5b951b18de6d53bc720b003076cc@ec2-54-225-89-195.compute-1.amazonaws.com:5432/d4lvgiuliifvth"
 	SECRET_KEY = os.getenv('SECRET_KEY')
 
 
