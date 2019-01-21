@@ -3,7 +3,7 @@ import os
 class MainConfig():
 	"""Configuration class"""
 	DEBUG = False
-	TESTING = False
+	TESTING = True
 	SECRET_KEY = "andela"
 	DBNAME = "sendit_db"
 	DBUSER = "sendit_admin"
@@ -11,16 +11,25 @@ class MainConfig():
 	DBPASS = "andela"
 
 
-class DevelopmentConfig(MainConfig):
+class DevelopmentConfig():
 	"""Development configuration"""
 	DEBUG = True
 	DB_URL = "postgresql://sendit_admin:password@localhost/sendit_db"
+	TESTING = True
+	SECRET_KEY = "andela"
+	DBNAME = "sendit_db"
+	DBUSER = "sendit_admin"
+	DBHOST = "localhost"
+	DBPASS = "andela"
 
 
-class ProductionConfig(MainConfig):
+class ProductionConfig():
 	"""Production configuration"""
 	DB_URL = os.getenv('DB_URL')
-	SECRET_KEY = os.getenv('SECRET_KEY')
+	DBNAME = os.getenv('DBNAME')
+	DBUSER = os.getenv('DBUSER')
+	DBHOST = os.getenv('DBHOST')
+	DBPASS = os.getenv('DBPASS')
 
 
 class TestingConfig(MainConfig):
