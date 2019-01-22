@@ -2,6 +2,7 @@ from os import getenv
 import datetime
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 from app.api.v2.views import v2
 from config import config_set
 
@@ -15,4 +16,5 @@ def create_app(config= "development"):
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=2)
     app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/v2'
     jwt = JWTManager(app)
+    CORS(app)
     return app
