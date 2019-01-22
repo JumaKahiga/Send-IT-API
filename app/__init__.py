@@ -16,5 +16,5 @@ def create_app(config= "development"):
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=2)
     app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/v2'
     jwt = JWTManager(app)
-    CORS(app)
+    cors = CORS(app, resources={r"/api/v2/*": {"origins": "*"}})
     return app
