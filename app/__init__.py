@@ -10,7 +10,7 @@ secret_key = getenv('SECRET_KEY')
 
 def create_app(config= "development"):
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, resources={r"*": {"origins": "*"}})
     app.config.from_object(config_set[config])
     app.register_blueprint(v2)
     app.config['JWT_SECRET_KEY'] = secret_key
