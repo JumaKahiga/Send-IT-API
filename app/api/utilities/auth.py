@@ -43,17 +43,17 @@ class PasswordAuth():
         if db_return == None:
             return False
         else:
-            user_id = db_return["username"]
+            username = db_return["username"]
 
     def get_user_id(self, email):
         """Gets user user id during login."""
-        username = "username"
+        user_id = "user_id"
         db_return = db.fetch_single(user_id, email)
         if db_return == None:
             return False
         else:
             user_id = db_return["user_id"]
-            
+
 
 class RegAuth():
     """Checks if user already exists."""
