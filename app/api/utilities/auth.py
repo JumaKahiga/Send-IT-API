@@ -44,6 +44,7 @@ class PasswordAuth():
             return False
         else:
             username = db_return["username"]
+            return username
 
     def get_user_id(self, email):
         """Gets user user id during login."""
@@ -53,6 +54,7 @@ class PasswordAuth():
             return False
         else:
             user_id = db_return["user_id"]
+            return user_id
 
 
 class RegAuth():
