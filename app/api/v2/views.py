@@ -129,9 +129,19 @@ class UserLogin(Resource):
 
 		if login_data == True:
 			user_role = password_check.get_user_role(email)
+			user_id = password_check.get_user_id(email)
+			username = password_check.get_username(email)
 			tokens_dict = {
-				'access_token': create_access_token(identity={"email": email, "user_role": user_role}, fresh=True),
-				'refresh_token': create_refresh_token(identity={"email": email, "user_role": user_role})
+				'access_token': create_access_token(identity={
+					"email": email,
+					"user_role": user_role,
+					"username": username,
+					"user_id": user_id}, fresh=True),
+				'refresh_token': create_refresh_token(identity={
+					"email": email,
+					"user_role": user_role,
+					"username": username,
+					"user_id": user_id})
 			}
 			return make_response(jsonify({"message": "Login successful", "tokens": tokens_dict}), 200)
 		else:
